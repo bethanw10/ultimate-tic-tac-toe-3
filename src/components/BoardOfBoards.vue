@@ -1,11 +1,8 @@
 <template>
     <div class="board-container">
       <div class="squares tic-tac-toe-grid">
-        <template v-for="(piece, i) in board" :key="i">
-            <div class="square" @click="pickSquare(i)" :class="{full: squareIsFull(piece)}">
-              <img v-if="piece == PieceType.Nought" class="piece" src="/src/assets/circle.svg"/>
-              <img v-if="piece == PieceType.Cross" class="piece" src="/src/assets/cross.svg"/>
-            </div>
+        <template v-for="(_, i) in board" :key="i">
+            <BoardVue @win="subGameWon(i, $event)"></BoardVue>
         </template>
       </div>
       <div class="overlay tic-tac-toe-grid" v-if="gameWon">
@@ -14,7 +11,7 @@
           <div v-if="board.winner() == PieceType.Cross" class="overlay-square crosses"></div>
         </template>
       </div>
-      <div class="winner " v-if="gameWon">
+      <div class="winner" v-if="gameWon">
         <img v-if="board.winner() == PieceType.Nought" class="winning-piece" src="/src/assets/circle.svg"/>
         <img v-if="board.winner() == PieceType.Cross" class="winning-piece" src="/src/assets/cross.svg"/>
       </div>
@@ -24,11 +21,10 @@
 <script lang="ts">
   import { Board } from '@/models/Board';
   import { PieceType } from '@/models/PieceType';
+  import  BoardVue from './Board.vue';
 
-  
   export default {
-    name: 'BoardView',
-    components: {},
+    components: { BoardVue },
     data() {
       return {
         board: new Board(),
@@ -47,12 +43,8 @@
       squareIsFull(piece: PieceType) {
         return piece !== PieceType.None;
       },
-      pickSquare(i: number) {
-        this.board.playMove(i)
-
-        if (this.gameWon) {
-          this.$emit('win', this.board.winner())
-        }
+      subGameWon(i: number, piece: PieceType) {
+        this.board.placePiece(i, piece);
       }
     },
   }
@@ -61,13 +53,17 @@
   <style scoped>
   .board-container {
     display: flex;
-    position: relative;
     font-family: 'Roboto', sans-serif;
     flex-wrap: wrap-reverse;
     height: 100%;
     align-items: center;
     justify-content: center;
-    color: #ddd;
+  }
+
+  .squares, .overlay, .winner {
+    margin: 32px 16px;
+    height: calc(min(100vh, 100vw) - 64px);
+    width: calc(min(100vh, 100vw) - 64px);
   }
 
   .tic-tac-toe-grid {
@@ -77,31 +73,19 @@
     grid-gap: 2%;
   }
 
-  .squares, .square, .piece, .overlay, .overlay-square, .winning-piece {
-    height: 100%;
-    width: 100%;
-  }
-
   .squares {
     position: relative;
   }
 
-  .square {
-    position: relative;
-    border-radius: 10%;
-    padding: 15%;
-    cursor: pointer;    
-    background: rgb(230 214 202);
+  .winner {
+    position: absolute;
   }
 
-  .square.full {
-    cursor: auto;
-    pointer-events: none;
-  }
-
-  .piece {
+  .winning-piece {
+    width: 100%;
+    height: 100%;
     display: block;
-    z-index: 5;
+    padding: 15%;    
     user-select: none;
   }
 
@@ -110,8 +94,10 @@
   }
 
   .overlay-square {
+    width: 100%;
+    height: 100%;
     position: relative;    
-    border-radius: 10%;
+    border-radius: 2%;
   }
 
   .overlay-square.crosses {    
@@ -121,19 +107,5 @@
   .overlay-square.naughts {
     background-color: #34474ea1;
   }
-
-  .winner {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .winning-piece {
-    display: block;
-    padding: 15%;
-  }
-
   </style>
   

@@ -25,6 +25,10 @@ export class Board extends Array<PieceType>{
         }
     }
 
+    placePiece(i: number, pieceType: PieceType) {
+        this[i] = pieceType;
+    }
+
     winner() : PieceType {
         // columns
         for (let i = 0; i <= 2; i++) {
