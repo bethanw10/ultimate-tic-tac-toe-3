@@ -1,54 +1,68 @@
 <template>
     <div class="board-container">
-      <div class="squares tic-tac-toe-grid">
-        <template v-for="(piece, i) in board" :key="i">
-            <div class="square" @click="pickSquare(i)" :class="{full: squareIsFull(piece)}">
-              <img v-if="piece == PieceType.Nought" class="piece" src="/src/assets/circle.svg"/>
-              <img v-if="piece == PieceType.Cross" class="piece" src="/src/assets/cross.svg"/>
+      <div class="squares nine-by-nine-grid">
+        <template v-for="(symbol, i) in board" :key="i">
+            <div 
+                class="square" 
+                :class="{full: squareIsFull(symbol), disabled: gameWon || !isCurrentPlayersTurn}"
+                @click="pickSquare(i)">
+              <img v-if="symbol == Symbol.Nought" class="symbol" src="/src/assets/circle.svg"/>
+              <img v-if="symbol == Symbol.Cross" class="symbol" src="/src/assets/cross.svg"/>
             </div>
         </template>
       </div>
-      <div class="overlay tic-tac-toe-grid" v-if="gameWon">
+      <div class="overlay nine-by-nine-grid">
         <template v-for="(_, i) in board" :key="i">
-          <div v-if="board.winner() == PieceType.Nought" class="overlay-square naughts"></div>
-          <div v-if="board.winner() == PieceType.Cross" class="overlay-square crosses"></div>
+          <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
+          <div v-if="board.winner() == Symbol.Cross" class="overlay-square crosses"></div>
+          <div v-if="!gameWon && !isCurrentPlayersTurn" class="overlay-square disabled"></div>
         </template>
       </div>
-      <div class="winner " v-if="gameWon">
-        <img v-if="board.winner() == PieceType.Nought" class="winning-piece" src="/src/assets/circle.svg"/>
-        <img v-if="board.winner() == PieceType.Cross" class="winning-piece" src="/src/assets/cross.svg"/>
+      <div class="winner" v-if="gameWon">
+        <img v-if="board.winner() == Symbol.Nought" class="winning-symbol" src="/src/assets/circle.svg"/>
+        <img v-if="board.winner() == Symbol.Cross" class="winning-symbol" src="/src/assets/cross.svg"/>
       </div>
     </div>
   </template>
   
 <script lang="ts">
   import { Board } from '@/models/Board';
-  import { PieceType } from '@/models/PieceType';
+  import { Symbol } from '@/models/SymbolType';
+  import type { PropType } from 'vue';
 
-  
   export default {
     name: 'BoardView',
     components: {},
+    props: {
+      playersTurn: {
+        type: Number as PropType<Symbol>,
+        required: true
+      } 
+    },
     data() {
       return {
         board: new Board(),
-        crossesTurn: true,
-        PieceType,
+        Symbol,
       }
     },
     created() {
     },
     computed: {
       gameWon() {
-        return this.board.winner() !== PieceType.None
+        return this.board.winner() !== Symbol.None;
+      },
+      isCurrentPlayersTurn() {
+        return this.board.turn == Symbol.None || this.playersTurn === this.board.turn;
       }
     },
     methods: {
-      squareIsFull(piece: PieceType) {
-        return piece !== PieceType.None;
+      squareIsFull(symbol: Symbol) {
+        return symbol !== Symbol.None;
       },
       pickSquare(i: number) {
-        this.board.playMove(i)
+        this.board.playMove(i, this.playersTurn)
+
+        this.$emit('turn');
 
         if (this.gameWon) {
           this.$emit('win', this.board.winner())
@@ -70,14 +84,14 @@
     color: #ddd;
   }
 
-  .tic-tac-toe-grid {
+  .nine-by-nine-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);    
     grid-gap: 2%;
   }
 
-  .squares, .square, .piece, .overlay, .overlay-square, .winning-piece {
+  .squares, .square, .symbol, .overlay, .overlay-square, .winning-symbol {
     height: 100%;
     width: 100%;
   }
@@ -99,14 +113,19 @@
     pointer-events: none;
   }
 
-  .piece {
+  .square.disabled {
+    cursor: auto;
+    pointer-events: none;
+  }
+
+  .symbol {
     display: block;
-    z-index: 5;
     user-select: none;
   }
 
   .overlay { 
     position: absolute;
+    pointer-events: none;
   }
 
   .overlay-square {
@@ -115,11 +134,15 @@
   }
 
   .overlay-square.crosses {    
-    background-color: #5a2528a9;
+    background-color: rgba(99, 39, 42, 0.8);
   }
 
   .overlay-square.naughts {
-    background-color: #34474ea1;
+    background-color: rgba(70, 100, 109, 0.8);
+  }
+
+  .overlay-square.disabled {
+    background-color: rgba(85, 85, 85, 0.8);
   }
 
   .winner {
@@ -130,7 +153,7 @@
     right: 0;
   }
 
-  .winning-piece {
+  .winning-symbol {
     display: block;
     padding: 15%;
   }

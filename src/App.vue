@@ -1,18 +1,17 @@
 <template>
   <div id="app">
     <BoardOfBoardsView/>
+    <div>test!!</div>
   </div>
 </template>
 
 <script lang="ts">
   import BoardOfBoardsView from './components/BoardOfBoards.vue'
-  import BoardView from './components/Board.vue'
 
   export default {
     name: 'App',
     components: {
       BoardOfBoardsView,
-      // BoardView
     }
   }
 </script>

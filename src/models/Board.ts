@@ -1,38 +1,38 @@
-import { PieceType } from "./PieceType";
+import { Symbol } from "./SymbolType";
 
-export class Board extends Array<PieceType>{
-    turn: PieceType = PieceType.Cross; 
+export class Board extends Array<Symbol>{
+    public turn: Symbol = Symbol.None; 
 
     constructor() {
         super();
 
         for (let i = 0; i < 9; i++) {
-            this.push(PieceType.None);
+            this.push(Symbol.None);
         }
     }
 
-    playMove(i: number) {
-        if (this[i] !== PieceType.None) {
+    playMove(i: number, symbol: Symbol) {
+        if (this[i] !== Symbol.None) {
             return;
-        } 
+        }
+
+        this[i] = symbol;
   
-        if (this.turn == PieceType.Cross) {
-            this[i] = PieceType.Cross;
-            this.turn = PieceType.Nought;
+        if (symbol == Symbol.Cross) {
+            this.turn = Symbol.Nought;
         } else {
-            this[i] = PieceType.Nought;
-            this.turn = PieceType.Cross;
+            this.turn = Symbol.Cross;
         }
     }
 
-    placePiece(i: number, pieceType: PieceType) {
-        this[i] = pieceType;
+    placeSymbol(i: number, symbol: Symbol) {
+        this[i] = symbol;
     }
 
-    winner() : PieceType {
+    winner() : Symbol {
         // columns
         for (let i = 0; i <= 2; i++) {
-            if (this[i] !== PieceType.None && 
+            if (this[i] !== Symbol.None && 
                 this[i] == this[i + 3] && 
                 this[i] == this[i + 6]) 
             {
@@ -42,7 +42,7 @@ export class Board extends Array<PieceType>{
 
         // rows
         for (let i = 0; i <= 6; i += 3) {
-            if (this[i] !== PieceType.None && 
+            if (this[i] !== Symbol.None && 
                 this[i] == this[i + 1] && 
                 this[i] == this[i + 2])         
             {            
@@ -51,18 +51,18 @@ export class Board extends Array<PieceType>{
         }
 
         // diagonals
-        if (this[0] != PieceType.None) {
+        if (this[0] != Symbol.None) {
             if (this[0] == this[4] && this[0] == this[8]) {
                 return this[0];
             }
         }
 
-        if (this[2] != PieceType.None) {
+        if (this[2] != Symbol.None) {
             if (this[2] == this[4] && this[2] == this[6]) {
                 return this[2];
             }
         }
 
-        return PieceType.None;
+        return Symbol.None;
     }
 }

@@ -1,4 +1,4 @@
-export enum PieceType {
+export enum Symbol {
     None,
     Cross,
     Nought
