@@ -1,33 +1,22 @@
 <template>
-  <div id="app">
-    <component :is="currentView" />
+  <div id="nav">
+    <router-link to="/TicTacToe">Tic Tac Toe</router-link> |
+    <router-link to="/">Tic Tac Toe<span class="super">2</span></router-link>
   </div>
+  <router-view />
 </template>
 
 <script lang="ts">
-  import BoardOfBoardsView from './components/UltimateTicTacToe/BoardOfBoards.vue'
-
-  export default {
-    name: 'App',
-    data() {
+export default {
+  name: 'App',
+  data() {
     return {
-        currentPath: window.location.hash
-      }
-    },
-    components: {
-      BoardOfBoardsView,
-    },
-    computed: {
-      currentView() {
-        return BoardOfBoardsView;
-      }
-    },
-    mounted() {
-      window.addEventListener('hashchange', () => {
-        this.currentPath = window.location.hash
-      })
+      currentPath: window.location.hash
     }
-  }
+  },
+  components: {
+  },
+}
 </script>
 
 <style>
@@ -37,10 +26,20 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   background: rgb(59, 59, 59);
   margin: 0;
   height: 100%;
+}
+
+a {
+  color: white;
+}
+
+.super {
+  vertical-align: super;
+  font-size: small;
 }
 
 #app {
@@ -51,7 +50,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-
+  width: 100%;
 }
 
 button {
@@ -82,5 +81,4 @@ button.grey {
 button.grey:hover {
   background-color: #525252;
 }
-
 </style>

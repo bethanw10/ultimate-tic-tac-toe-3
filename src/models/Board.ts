@@ -24,23 +24,21 @@ export class Board extends Array<Symbol>{
         }
     }
 
-    winner() : Symbol {
+    winner(): Symbol {
         // columns
         for (let i = 0; i <= 2; i++) {
-            if (this[i] !== Symbol.None && 
-                this[i] == this[i + 3] && 
-                this[i] == this[i + 6]) 
-            {
+            if (this[i] !== Symbol.None &&
+                this[i] == this[i + 3] &&
+                this[i] == this[i + 6]) {
                 return this[i];
             }
         }
 
         // rows
         for (let i = 0; i <= 6; i += 3) {
-            if (this[i] !== Symbol.None && 
-                this[i] == this[i + 1] && 
-                this[i] == this[i + 2])         
-            {            
+            if (this[i] !== Symbol.None &&
+                this[i] == this[i + 1] &&
+                this[i] == this[i + 2]) {
                 return this[i];
             }
         }

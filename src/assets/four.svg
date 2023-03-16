@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-80 -80 280 280" transform = "rotate(45 0 0)">
+<!-- 
+    <line class="line1" x1="0" y1="75" x2="140" y2="75" stroke-linecap="round"
+        style="stroke:#d14f58; stroke-width:50"/>
+    <line class="line2" x1="75" y1="0" x2="75" y2="140"
+        stroke-width="50" style="stroke:#d14f58" stroke-linecap="round"/>
+
+            <line class="line2" x1="75" y1="0" x2="0" y2="75" 
+        stroke-width="50" style="stroke:#44444480" stroke-linecap="round"/> -->
+
+        
+    <line class="line1" x1="-50" y1="75" x2="170" y2="75" stroke-linecap="round"
+        style="stroke:#d14f58; stroke-width:60"/>
+    <line class="line2" x1="75" y1="-50" x2="75" y2="170"
+        stroke-width="60" style="stroke:#d14f58" stroke-linecap="round"/>
+    <line class="line2" x1="75" y1="-50" x2="-50" y2="75" 
+        stroke-width="60" style="stroke:#d14f58" stroke-linecap="round"/> -->
+</svg>
