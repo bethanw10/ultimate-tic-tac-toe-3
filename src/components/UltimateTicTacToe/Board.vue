@@ -3,11 +3,12 @@
       <div class="squares nine-by-nine-grid">
         <template v-for="(symbol, i) in board" :key="i">
             <div 
-                class="square" 
-                :class="{full: squareIsFull(symbol), disabled: gameWon || !isCurrentPlayersTurn}"
-                @click="pickSquare(i)">
-              <img v-if="symbol == Symbol.Nought" class="symbol" src="/src/assets/circle.svg"/>
-              <img v-if="symbol == Symbol.Cross" class="symbol" src="/src/assets/cross.svg"/>
+              class="square" 
+              :class="{full: squareIsFull(symbol), disabled: disabled}"
+              @click="pickSquare(i)"
+            >
+              <NoughtSymbol v-if="symbol == Symbol.Nought" class="symbol nought" animate/>
+              <CrossSymbol v-if="symbol == Symbol.Cross" class="symbol cross" animate/>
             </div>
         </template>
       </div>
@@ -15,12 +16,12 @@
         <template v-for="(_, i) in board" :key="i">
           <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
           <div v-if="board.winner() == Symbol.Cross" class="overlay-square crosses"></div>
-          <div v-if="!gameWon && !isCurrentPlayersTurn" class="overlay-square disabled"></div>
+          <div v-if="!gameWon && disabled" class="overlay-square disabled"></div>
         </template>
       </div>
       <div class="winner" v-if="gameWon">
-        <img v-if="board.winner() == Symbol.Nought" class="winning-symbol" src="/src/assets/circle.svg"/>
-        <img v-if="board.winner() == Symbol.Cross" class="winning-symbol" src="/src/assets/cross.svg"/>
+        <NoughtSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol"/>
+        <CrossSymbol v-if="board.winner() == Symbol.Cross" class="winning-symbol"/>
       </div>
     </div>
   </template>
@@ -29,19 +30,28 @@
   import { Board } from '@/models/Board';
   import { Symbol } from '@/models/SymbolType';
   import type { PropType } from 'vue';
+  import NoughtSymbol from '@/components/NoughtSymbol.vue';
+  import CrossSymbol from '@/components/CrossSymbol.vue';
 
   export default {
     name: 'BoardView',
-    components: {},
+    components: { NoughtSymbol, CrossSymbol },
     props: {
+      board: {
+        type: Board,
+        required: true
+      },
       playersTurn: {
         type: Number as PropType<Symbol>,
         required: true
-      } 
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
     },
     data() {
       return {
-        board: new Board(),
         Symbol,
       }
     },
@@ -50,9 +60,6 @@
     computed: {
       gameWon() {
         return this.board.winner() !== Symbol.None;
-      },
-      isCurrentPlayersTurn() {
-        return this.board.turn == Symbol.None || this.playersTurn === this.board.turn;
       }
     },
     methods: {
@@ -62,11 +69,11 @@
       pickSquare(i: number) {
         this.board.playMove(i, this.playersTurn)
 
-        this.$emit('turn');
-
         if (this.gameWon) {
           this.$emit('win', this.board.winner())
         }
+
+        this.$emit('turn', i);
       }
     },
   }
@@ -120,7 +127,26 @@
 
   .symbol {
     display: block;
-    user-select: none;
+  }
+
+  /* .symbol.nought {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: animateDash .5s linear forwards;
+  } */
+
+  /* .symbol.cross {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: animateDash .5s linear forwards infinite;
+  }
+ */
+
+  
+  @keyframes animateDash {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 
   .overlay { 

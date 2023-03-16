@@ -1,17 +1,31 @@
 <template>
   <div id="app">
-    <BoardOfBoardsView/>
-    <div>test!!</div>
+    <component :is="currentView" />
   </div>
 </template>
 
 <script lang="ts">
-  import BoardOfBoardsView from './components/BoardOfBoards.vue'
+  import BoardOfBoardsView from './components/UltimateTicTacToe/BoardOfBoards.vue'
 
   export default {
     name: 'App',
+    data() {
+    return {
+        currentPath: window.location.hash
+      }
+    },
     components: {
       BoardOfBoardsView,
+    },
+    computed: {
+      currentView() {
+        return BoardOfBoardsView;
+      }
+    },
+    mounted() {
+      window.addEventListener('hashchange', () => {
+        this.currentPath = window.location.hash
+      })
     }
   }
 </script>
@@ -24,15 +38,20 @@
 }
 
 html, body {
-  /*background: rgb(71, 69, 79);*/
   background: rgb(59, 59, 59);
   margin: 0;
+  height: 100%;
 }
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
 }
 
 button {

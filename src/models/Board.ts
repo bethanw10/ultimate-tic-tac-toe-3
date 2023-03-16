@@ -1,7 +1,6 @@
 import { Symbol } from "./SymbolType";
 
 export class Board extends Array<Symbol>{
-    public turn: Symbol = Symbol.None; 
 
     constructor() {
         super();
@@ -17,16 +16,12 @@ export class Board extends Array<Symbol>{
         }
 
         this[i] = symbol;
-  
-        if (symbol == Symbol.Cross) {
-            this.turn = Symbol.Nought;
-        } else {
-            this.turn = Symbol.Cross;
-        }
     }
 
-    placeSymbol(i: number, symbol: Symbol) {
-        this[i] = symbol;
+    reset() {
+        for (const i in this) {
+            this[i] = Symbol.None;
+        }
     }
 
     winner() : Symbol {
