@@ -34,7 +34,7 @@ export default {
         },
         color: {
             type: String,
-            default: "--red"
+            default: "var(--red)"
         }
     },
 }
