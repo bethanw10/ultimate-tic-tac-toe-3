@@ -1,0 +1,11 @@
+:root {
+    --white: #e6d6ca;
+    --red: #d14f58;
+    --blue: #82b1c2;
+}
+
+@font-face {
+    font-family: "Nice Sugar";
+    src: url('@/assets/Nice Sugar.otf');
+  }
+  

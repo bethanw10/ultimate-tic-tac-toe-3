@@ -97,7 +97,7 @@ export default {
   display: flex;
   align-items: center;
   margin-left: auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: Nice Sugar;
 }
 
 .score {
@@ -111,10 +111,6 @@ export default {
   font-size: 1.3em;
   /* background: #f5e8df; */
   border-radius: 1vh;
-}
-
-.total {
-  
 }
 
 .turn-symbol {

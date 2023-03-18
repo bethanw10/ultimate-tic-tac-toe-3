@@ -1,6 +1,6 @@
 <template>
   <div class="board-container">
-    <div class="squares three-by-three-grid">
+    <div class="squares grid">
       <template v-for="(squares, y) in board.grid" :key="y">
         <template v-for="(symbol, x) in squares" :key="x">
           <div class="square" :class="{ full: squareIsFull(symbol), disabled: disabled }">
@@ -19,8 +19,7 @@
             <CircleSymbol v-if="symbol == Symbol.O" class="symbol" animate color="#666" />
 
             <template v-for="(sequence, i) in board.sosSequences[y][x]" :key="i">
-              <div class="line" :class="[`player${sequence.player}`, sequence.direction.toLowerCase()]"
-                :style="transformLine(sequence.direction)"></div>
+              <div class="line" :class="[`player${sequence.player}`, sequence.direction.toLowerCase()]"></div>
             </template>
           </div>
         </template>
@@ -34,7 +33,7 @@ import { SosGrid } from '@/models/SosGrid';
 import { Symbol } from '@/models/SymbolType';
 import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
 import SSymbol from '@/components/Symbols/SSymbol.vue';
-import { Direction } from '@/models/Direction';
+import "@/styles/variables.css";
 
 export default {
   name: 'SosBoardView',
@@ -79,40 +78,12 @@ export default {
 
       this.$emit('turn', sosMade);
     },
-    transformLine(direction: string) {
-      let style = "";
-
-      switch (direction) {
-        case Direction.NW:
-          style = `transform: rotate(45deg); width:296.98%`
-          break;
-        case Direction.N:
-          style = 'transform: rotate(90deg);'
-          break;
-        case Direction.NE:
-          style = `transform: rotate(135deg); width:296.98%`
-          break;
-        case Direction.E:
-          style = `transform: rotate(180deg);`
-          break;
-        case Direction.SE:
-          style = `transform: rotate(225deg); width:296.98%`
-          break;
-        case Direction.S:
-          style = `transform: rotate(270deg);`
-          break;
-        case Direction.SW:
-          style = `transform: rotate(315deg); width:296.98%`
-          break;
-      }
-
-      return style;
-    }
   },
 }
 </script>
   
 <style scoped>
+
 .board-container {
   display: flex;
   position: relative;
@@ -120,10 +91,9 @@ export default {
   flex-wrap: wrap-reverse;
   align-items: center;
   justify-content: center;
-  color: #ddd;
 }
 
-.three-by-three-grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
@@ -147,7 +117,7 @@ export default {
   position: relative;
   border-radius: 10%;
   cursor: pointer;
-  background: #e6d6ca;
+  background: var(--white);
 }
 
 .line {
@@ -158,14 +128,17 @@ export default {
   border-radius: 1vmin;
   z-index: 10;
   transform-origin: right;
+  border-bottom: 1.2vmin solid var(--red);
+  animation-name: appear;
+  animation-duration: .2s;
 }
 
-.line.player1 {
-  border-bottom: 1vmin solid #d14f58;
+@keyframes appear {
+  from {width: 0%;}
 }
 
 .line.player2 {
-  border-bottom: 1vmin solid #82b1c2;
+  border-color: var(--blue);
 }
 
 .line.northwest {
@@ -196,8 +169,11 @@ export default {
   transform: rotate(315deg);
 }
 
-.line.northwest, .line.southwest, .line.southeast, .line.southwest {
-  width:296.98%;
+.line.northwest,
+.line.northeast,
+.line.southeast,
+.line.southwest {
+  width: 296.98%;
 }
 
 .square.full {

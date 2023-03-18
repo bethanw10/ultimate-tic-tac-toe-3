@@ -60,7 +60,7 @@ export default {
 }
 
 .board {
-  margin: 16px 16px 16px 16px;
+  margin: 16px;
   height: calc(min(80vh, 100vw) - 32px);
   width: calc(min(80vh, 100vw) - 32px);
 }
