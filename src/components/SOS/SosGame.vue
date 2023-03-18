@@ -11,7 +11,7 @@
           <div class="total">{{ player1TotalSos }}</div>
         </div>
 
-        <div class="vs">-</div>
+        <div class="vs">vs</div>
 
         <div class="score">
           <div class="turn" :class="currentTurn == 1 ? 'grey' : 'blue'">
@@ -84,14 +84,14 @@ export default {
 }
 
 .board {
-  /* margin: 16px; */
-  height: calc(min(80vh, 100vw) - 32px);
-  width: calc(min(80vh, 100vw) - 32px);
+  margin: 1vmin;
+  height: min(65vh, 100vw);
+  width: min(65vh, 100vw);
 }
 
 .controls {
-  height: calc(20vh - 16px);
-  width: calc(min(80vh, 100vw) - 32px);
+  height: calc(25vh - 16px);
+  width: calc(min(60vh, 100vw) - 32px);
   padding: 1vh;
   border-radius: 10px;
   display: flex;
@@ -104,6 +104,7 @@ export default {
   display: flex;
   align-items: center;
   font-family: Nice Sugar;
+  height: 100%;
 }
 
 .score {
@@ -113,17 +114,17 @@ export default {
   align-items: center;
   justify-content: center;
   color: #333;
-  font-size: 1.5em;
+  font-size: 2em;
   background: #e6d6ca;
   border-radius: 1vh;
 }
 
 .turn {
-  padding: 1.5vh 2vh;
+  padding: 1.5vh 3vh;
   flex: 1;
   border-radius: 1vh 1vh 0 0;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   display: flex;
   flex-direction: column;
   font-size: small;
@@ -163,9 +164,8 @@ export default {
 
 .turn-symbol {
   display: block;
-  height: 100%;
-  width: 5vh;
-  aspect-ratio: 1/1;
+  width: 8vh;
+  height: 8vh;
   padding: .5vh;
 }
 
@@ -178,9 +178,9 @@ export default {
 }
 
 .vs {
-  color: #aaa;
+  color: #2b2928;
   font-size: 2em;
-  margin: 1vh;
+  margin: 1.5vh;
 }
 
 .reset {
@@ -188,7 +188,7 @@ export default {
   padding: 2vh;
   cursor: pointer;
   position: absolute;
-  height: 10vh;
+  height: 8vh;
   background: var(--white);
   border-radius: 2vh;
   right: 0;
