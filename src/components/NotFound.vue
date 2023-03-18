@@ -2,11 +2,11 @@
     <div class="not-found">
         <div>Page Not Found</div>
         <div class="board-container">
-            <div class="squares nine-by-nine-grid">
+            <div class="squares three-by-three-grid">
                 <template v-for="i in 9" :key="i">
                     <div class="square">
                         <img v-if="i == 4 || i == 6" class="symbol" src="/src/assets/four.svg" />
-                        <NoughtSymbol v-if="i == 5" class="symbol cross" />
+                        <CircleSymbol v-if="i == 5" class="symbol cross" />
                     </div>
                 </template>
             </div>
@@ -16,11 +16,11 @@
     
 <script lang="ts">
 import { Symbol } from '@/models/SymbolType';
-import NoughtSymbol from '@/components/NoughtSymbol.vue';
+import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
 
 export default {
     name: 'BoardView',
-    components: { NoughtSymbol },
+    components: { CircleSymbol },
     data() {
         return {
             Symbol,
@@ -55,7 +55,7 @@ export default {
     color: #ddd;
 }
 
-.nine-by-nine-grid {
+.three-by-three-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);

@@ -31,6 +31,10 @@ export default {
         animate: {
             type: Boolean,
             default: false
+        },
+        color: {
+            type: String,
+            default: "#d14f58"
         }
     },
 }

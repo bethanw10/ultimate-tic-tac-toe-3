@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
-import TicTacToe from '@/components/Classic/TicTacToe.vue'
-import TicTacToeSquared from '@/components/Squared/TicTacToeSquared.vue'
+import TicTacToe from '@/components/Classic/TicTacToeGame.vue'
+import TicTacToeSquared from '@/components/Squared/TicTacToe2Game.vue'
+import SOS from '@/components/SOS/SosGame.vue'
 import NotFound from "@/components/NotFound.vue";
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: "/TicTacToe",
     name: "Tic Tac Toe",
     component: TicTacToe,
+  },
+  {
+    path: "/SOS",
+    name: "SOS",
+    component: SOS,
   },
   {
     path: '/:pathMatch(.*)*',

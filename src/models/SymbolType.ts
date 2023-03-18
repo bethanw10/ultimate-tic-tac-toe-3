@@ -1,5 +1,7 @@
 export enum Symbol {
     None,
     Cross,
-    Nought
+    Nought,
+    S,
+    O
 }

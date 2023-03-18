@@ -1,6 +1,6 @@
 <template>
   <div class="controls">
-    <NoughtSymbol class="turn-symbol" :class="{ grey: playersTurn == Symbol.Cross }" />
+    <CircleSymbol class="turn-symbol" :class="{ grey: playersTurn == Symbol.Cross }" />
     <img class="reset" @click="resetGame" src="/src/assets/reset.svg" />
     <CrossSymbol class="turn-symbol" :class="{ grey: playersTurn == Symbol.Nought }" />
   </div>
@@ -9,12 +9,12 @@
 <script lang="ts">
 import { Symbol } from '@/models/SymbolType';
 import type { PropType } from 'vue';
-import NoughtSymbol from '@/components/NoughtSymbol.vue';
-import CrossSymbol from '@/components/CrossSymbol.vue';
+import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
+import CrossSymbol from '@/components/symbols/CrossSymbol.vue';
 
 export default {
   name: 'ControlsComp',
-  components: { NoughtSymbol, CrossSymbol },
+  components: { CircleSymbol, CrossSymbol },
   props: {
     playersTurn: {
       type: Number as PropType<Symbol>,

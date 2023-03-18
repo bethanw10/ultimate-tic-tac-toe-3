@@ -1,6 +1,6 @@
 import { Symbol } from "./SymbolType";
 
-export class Board extends Array<Symbol>{
+export class TicTacToeGrid extends Array<Symbol>{
 
     constructor() {
         super();

@@ -1,14 +1,14 @@
 <template>
   <div class="board-container">
-    <div class="squares nine-by-nine-grid">
+    <div class="squares three-by-three-grid">
       <template v-for="(symbol, i) in board" :key="i">
         <div class="square" :class="{ full: squareIsFull(symbol), disabled: disabled }" @click="pickSquare(i)">
-          <NoughtSymbol v-if="symbol == Symbol.Nought" class="symbol" animate />
+          <CircleSymbol v-if="symbol == Symbol.Nought" class="symbol" animate />
           <CrossSymbol v-if="symbol == Symbol.Cross" class="symbol" animate />
         </div>
       </template>
     </div>
-    <div class="overlay nine-by-nine-grid">
+    <div class="overlay three-by-three-grid">
       <template v-for="(_, i) in board" :key="i">
         <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
         <div v-if="board.winner() == Symbol.Cross" class="overlay-square crosses"></div>
@@ -16,25 +16,25 @@
       </template>
     </div>
     <div class="winner" v-if="gameWon">
-      <NoughtSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol" />
+      <CircleSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol" />
       <CrossSymbol v-if="board.winner() == Symbol.Cross" class="winning-symbol" />
     </div>
   </div>
 </template>
   
 <script lang="ts">
-import { Board } from '@/models/Board';
+import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/SymbolType';
 import type { PropType } from 'vue';
-import NoughtSymbol from '@/components/NoughtSymbol.vue';
-import CrossSymbol from '@/components/CrossSymbol.vue';
+import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
+import CrossSymbol from '@/components/symbols/CrossSymbol.vue';
 
 export default {
   name: 'BoardView',
-  components: { NoughtSymbol, CrossSymbol },
+  components: { CircleSymbol, CrossSymbol },
   props: {
     board: {
-      type: Board,
+      type: TicTacToeGrid,
       required: true
     },
     playersTurn: {
@@ -87,7 +87,7 @@ export default {
   color: #ddd;
 }
 
-.nine-by-nine-grid {
+.three-by-three-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);

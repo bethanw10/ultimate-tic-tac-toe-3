@@ -1,14 +1,14 @@
 <template>
   <div class="tic-tac-toe-squared">
     <div class="board-container">
-      <div class="squares nine-by-nine-grid">
+      <div class="squares three-by-three-grid">
         <template v-for="(childBoard, i) in childBoards" :key="i">
           <BoardVue @win="childGameWon(i, $event)" @turn="childGameTurn($event)" :board="childBoard"
             :players-turn="currentTurn" :disabled="currentBoard !== null && i !== currentBoard" />
         </template>
       </div>
 
-      <div class="overlay nine-by-nine-grid" v-if="gameWon">
+      <div class="overlay three-by-three-grid" v-if="gameWon">
         <template v-for="(_, i) in board" :key="i">
           <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
           <div v-if="board.winner() == Symbol.Cross" class="overlay-square crosses"></div>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="winner" v-if="gameWon">
-        <NoughtSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol" />
+        <CircleSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol" />
         <CrossSymbol v-if="board.winner() == Symbol.Cross" class="winning-symbol" />
       </div>
     </div>
@@ -26,19 +26,19 @@
 </template>
   
 <script lang="ts">
-import { Board } from '@/models/Board';
+import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/SymbolType';
-import BoardVue from '@/components/Board.vue';
-import NoughtSymbol from '@/components/NoughtSymbol.vue';
-import CrossSymbol from '@/components/CrossSymbol.vue';
+import BoardVue from '@/components/TicTacToeBoard.vue';
+import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
+import CrossSymbol from '@/components/symbols/CrossSymbol.vue';
 import Controls from '../Controls.vue';
 
 export default {
-  components: { BoardVue, NoughtSymbol, CrossSymbol, Controls },
+  components: { BoardVue, CircleSymbol, CrossSymbol, Controls },
   data() {
     return {
-      board: new Board(),
-      childBoards: [] as Board[],
+      board: new TicTacToeGrid(),
+      childBoards: [] as TicTacToeGrid[],
       currentTurn: Symbol.Cross,
       currentBoard: null as Number | null,
       Symbol,
@@ -46,7 +46,7 @@ export default {
   },
   created() {
     for (let i = 0; i < 9; i++) {
-      this.childBoards.push(new Board());
+      this.childBoards.push(new TicTacToeGrid());
     }
   },
   computed: {
@@ -117,7 +117,7 @@ export default {
   width: calc(min(80vh, 100vw) - 32px);
 }
 
-.nine-by-nine-grid {
+.three-by-three-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);

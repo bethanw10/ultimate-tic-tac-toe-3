@@ -6,16 +6,16 @@
 </template>
   
 <script lang="ts">
-import { Board } from '@/models/Board';
+import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/SymbolType';
-import BoardVue from '@/components/Board.vue';
+import BoardVue from '@/components/TicTacToeBoard.vue';
 import Controls from '../Controls.vue';
 
 export default {
   components: { BoardVue, Controls },
   data() {
     return {
-      board: new Board(),
+      board: new TicTacToeGrid(),
       currentTurn: Symbol.Cross,
       Symbol,
     }
