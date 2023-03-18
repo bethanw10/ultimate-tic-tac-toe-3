@@ -2,7 +2,7 @@ import { Directions, type Direction } from "./Direction";
 import { Symbol } from "./SymbolType";
 
 interface SosSequence {
-    direction: Direction;
+    direction: string;
     player: number;
 }
 
@@ -45,8 +45,8 @@ export class SosGrid {
         const newSos = [];
 
         if (symbol == Symbol.S) {
-            for (const direction of Directions.AllDirections) {
-                const [dx, dy] = [direction.x, direction.y];
+            for (const [direction, delta] of Object.entries(Directions.All)) {
+                const [dx, dy] = [delta.x, delta.y];
                 const [x1, y1] = [x + dx, y + dy];
                 const [x2, y2] = [x + dx * 2, y + dy * 2];
 
@@ -58,8 +58,8 @@ export class SosGrid {
                 }
             }
         } else if (symbol == Symbol.O) {
-            for (const direction of Directions.HalfDirections) {
-                const [dx, dy] = [direction.x, direction.y];
+            for (const [direction, delta] of Object.entries(Directions.Half)) {
+                const [dx, dy] = [delta.x, delta.y];
                 const [x1, y1] = [x - dx, y - dy];
                 const [x2, y2] = [x + dx, y + dy];
 
@@ -76,9 +76,11 @@ export class SosGrid {
     }
 
     isBoardFull() {
-        for (const symbol of SosGrid.iterate(this.grid)) {
-            if (symbol !== Symbol.None) {
-                return false;
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
+                if (this.grid[i][j] !== Symbol.None) {
+                    return false;
+                }
             }
         }
 
@@ -89,14 +91,6 @@ export class SosGrid {
         for (let i = 0; i < this.size; i++) {
             for (let j = 0; j < this.size; j++) {
                 this.grid[i][j] = Symbol.None;
-            }
-        }
-    }
-
-    private static * iterate(grid: Symbol[][]) {
-        for (const y of grid) {
-            for (const square of y) {
-                yield square;
             }
         }
     }

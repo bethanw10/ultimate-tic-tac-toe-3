@@ -19,7 +19,8 @@
             <CircleSymbol v-if="symbol == Symbol.O" class="symbol" animate color="#666" />
 
             <template v-for="(sequence, i) in board.sosSequences[y][x]" :key="i">
-              <div class="line" :style="transformLine(sequence.direction, sequence.player)"></div>
+              <div class="line" :class="[`player${sequence.player}`, sequence.direction.toLowerCase()]"
+                :style="transformLine(sequence.direction)"></div>
             </template>
           </div>
         </template>
@@ -31,10 +32,9 @@
 <script lang="ts">
 import { SosGrid } from '@/models/SosGrid';
 import { Symbol } from '@/models/SymbolType';
-import type { PropType } from 'vue';
 import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
-import SSymbol from '../symbols/SSymbol.vue';
-import{ Directions, type Direction } from '@/models/Direction';
+import SSymbol from '@/components/Symbols/SSymbol.vue';
+import { Direction } from '@/models/Direction';
 
 export default {
   name: 'SosBoardView',
@@ -79,39 +79,31 @@ export default {
 
       this.$emit('turn', sosMade);
     },
-    transformLine(direction: Direction, player: Number) {
+    transformLine(direction: string) {
       let style = "";
 
-      if (Directions.areEqual(direction, Directions.N)) {
-        style += 'transform: rotate(90deg); transform-origin: right;'
-      }
-
-      if (Directions.areEqual(direction, Directions.S)) {
-        style += 'transform: rotate(270deg); transform-origin: right;'
-      }
-
-      if (Directions.areEqual(direction, Directions.NW)) {
-        style += `transform: rotate(45deg); transform-origin: right; width:${296.98}%`
-      }
-
-      if (Directions.areEqual(direction, Directions.NE)) {
-        style += `transform: rotate(135deg); transform-origin: right; width:${296.98}%`
-      }
-
-      if (Directions.areEqual(direction, Directions.E)) {
-        style += `transform: rotate(180deg); transform-origin: right;`
-      }
-
-      if (Directions.areEqual(direction, Directions.SE)) {
-        style += `transform: rotate(225deg); transform-origin: right; width:${296.98}%`
-      }
-
-      if (Directions.areEqual(direction, Directions.SW)) {
-        style += `transform: rotate(315deg); transform-origin: right; width:${296.98}%`
-      }
-
-      if (player == 2) {
-        style += 'border-color: #82b1c2'
+      switch (direction) {
+        case Direction.NW:
+          style = `transform: rotate(45deg); width:296.98%`
+          break;
+        case Direction.N:
+          style = 'transform: rotate(90deg);'
+          break;
+        case Direction.NE:
+          style = `transform: rotate(135deg); width:296.98%`
+          break;
+        case Direction.E:
+          style = `transform: rotate(180deg);`
+          break;
+        case Direction.SE:
+          style = `transform: rotate(225deg); width:296.98%`
+          break;
+        case Direction.S:
+          style = `transform: rotate(270deg);`
+          break;
+        case Direction.SW:
+          style = `transform: rotate(315deg); width:296.98%`
+          break;
       }
 
       return style;
@@ -159,13 +151,53 @@ export default {
 }
 
 .line {
-  border-bottom: 1vmin solid #d14f58;
   width: 210%;
   position: absolute;
   top: calc(50% - 0.5vmin);
   right: 50%;
   border-radius: 1vmin;
   z-index: 10;
+  transform-origin: right;
+}
+
+.line.player1 {
+  border-bottom: 1vmin solid #d14f58;
+}
+
+.line.player2 {
+  border-bottom: 1vmin solid #82b1c2;
+}
+
+.line.northwest {
+  transform: rotate(45deg);
+}
+
+.line.north {
+  transform: rotate(90deg);
+}
+
+.line.northeast {
+  transform: rotate(135deg);
+}
+
+.line.east {
+  transform: rotate(180deg);
+}
+
+.line.southeast {
+  transform: rotate(225deg);
+}
+
+.line.south {
+  transform: rotate(270deg);
+}
+
+.line.southwest {
+  transform: rotate(315deg);
+}
+
+.line.northwest, .line.southwest, .line.southeast, .line.southwest {
+  width:296.98%;
 }
 
 .square.full {
