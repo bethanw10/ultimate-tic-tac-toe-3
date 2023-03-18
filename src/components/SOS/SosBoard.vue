@@ -31,7 +31,7 @@
 <script lang="ts">
 import { SosGrid } from '@/models/SosGrid';
 import { Symbol } from '@/models/SymbolType';
-import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
+import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import SSymbol from '@/components/Symbols/SSymbol.vue';
 import "@/styles/variables.css";
 

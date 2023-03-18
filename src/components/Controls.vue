@@ -9,8 +9,8 @@
 <script lang="ts">
 import { Symbol } from '@/models/SymbolType';
 import type { PropType } from 'vue';
-import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
-import CrossSymbol from '@/components/symbols/CrossSymbol.vue';
+import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
+import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 
 export default {
   name: 'ControlsComp',

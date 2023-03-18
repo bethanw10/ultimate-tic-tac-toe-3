@@ -29,8 +29,8 @@
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/SymbolType';
 import BoardVue from '@/components/TicTacToeBoard.vue';
-import CircleSymbol from '@/components/symbols/CircleSymbol.vue';
-import CrossSymbol from '@/components/symbols/CrossSymbol.vue';
+import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
+import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 import Controls from '../Controls.vue';
 
 export default {
