@@ -6,6 +6,7 @@
         <div class="score">
           <img class="turn-symbol" :class="{ grey: currentTurn == 2 }" src="/src/assets/one.svg" />
           <div class="total">{{ player1TotalSos }}</div>
+          <div v-show="currentTurn == 1" class="turn-indicator" style="background: var(--red);"></div>
         </div>
 
         <div class="vs">-</div>
@@ -13,6 +14,7 @@
         <div class="score">
           <img class="turn-symbol" :class="{ grey: currentTurn == 1 }" src="/src/assets/two.svg" />
           <div class="total">{{ player2TotalSos }}</div>
+          <div v-show="currentTurn == 2" class="turn-indicator" style="background: var(--blue);"></div>
         </div>
       </div>
       <img class="reset" @click="resetGame" src="/src/assets/reset.svg" />
@@ -78,19 +80,19 @@ export default {
 }
 
 .board {
-  margin: 16px 16px 16px 16px;
+  /* margin: 16px; */
   height: calc(min(80vh, 100vw) - 32px);
   width: calc(min(80vh, 100vw) - 32px);
 }
 
 .controls {
-  background: #e6d6ca;
-  height: calc(15vh - 16px);
-  width: calc(min(90vh, 100vw) - 32px);
+  height: calc(20vh - 16px);
+  width: calc(min(80vh, 100vw) - 32px);
   padding: 1vh;
   border-radius: 10px;
   display: flex;
   justify-content: center;
+  /* background: #e6d6ca; */
 }
 
 .scores {
@@ -104,23 +106,35 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0% 30%;
   align-items: center;
   justify-content: center;
   color: #333;
   font-size: 1.3em;
-  /* background: #f5e8df; */
+  background: #e6d6ca;
   border-radius: 1vh;
 }
 
 .turn-symbol {
-  flex: 1;
-  padding: 1vh;
+  flex: 2;
+  margin: 2vh 2vh 0 2vh;
   display: block;
+  width: 3em;
+  aspect-ratio: 1/1;
 }
 
 .turn-symbol.grey {
   filter: contrast(0%);
+}
+
+.turn-indicator {
+  height: 6%;
+  width: 100%;
+  display: block;
+  border-radius: 0 0 1vh 1vh;
+}
+
+.total {
+  padding: 1vh 0;
 }
 
 .vs {
