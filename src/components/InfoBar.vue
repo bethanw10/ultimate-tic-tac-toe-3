@@ -66,8 +66,8 @@ export default {
   
 <style scoped>
 .info-bar {
-  height: calc(25vh - 16px);
-  width: calc(min(65vh, 100vw) - 32px);
+  height: 25vh;
+  width: min(65vh, 100vw);
   padding: 1vh;
   border-radius: 10px;
   display: flex;
@@ -90,7 +90,7 @@ export default {
   align-items: center;
   justify-content: center;
   color: #333;
-  font-size: 2em;
+  font-size: 4vh;
   background: #e6d6ca;
   border-radius: 1vh;
 }
@@ -99,7 +99,7 @@ export default {
   padding: 1.5vh 3vh;
   flex: 1;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   font-size: small;
@@ -112,9 +112,6 @@ export default {
 
 .turn:only-child {
   border-radius: 1vh;
-}
-.turn.red {
-  background-color: #f75c6698;
 }
 
 .turn::before {
@@ -134,8 +131,12 @@ export default {
   border-top: 1.2vh solid var(--blue);
 }
 
+.turn.red {
+  background-color: #f75c6698;
+}
+
 .turn.blue {
-  background-color: #90c5d8cc;
+  background-color: #4798b683;
 }
 
 .turn.grey {
@@ -151,6 +152,10 @@ export default {
 
 .turn.grey :not(.player) {
   filter: contrast(0%);
+}
+
+.player {
+  margin-bottom: 1.5vh;
 }
 
 .total {
