@@ -1,7 +1,14 @@
 <template>
   <div class="tic-tac-toe">
     <BoardVue class="board" @turn="gameTurn()" :board="board" :players-turn="currentTurn" />
-    <Controls :players-turn="currentTurn" @resetGame="resetGame" />
+    <InfoBar :current-turn="currentTurn" @resetGame="resetGame">
+      <template v-slot:player1>
+        <CrossSymbol />
+      </template>
+      <template v-slot:player2>
+        <CircleSymbol />
+      </template>
+    </InfoBar>
   </div>
 </template>
   
@@ -9,10 +16,12 @@
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/SymbolType';
 import BoardVue from '@/components/TicTacToeBoard.vue';
-import Controls from '../Controls.vue';
+import InfoBar from '@/components/InfoBar.vue';
+import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
+import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 
 export default {
-  components: { BoardVue, Controls },
+  components: { BoardVue, InfoBar, CircleSymbol, CrossSymbol },
   data() {
     return {
       board: new TicTacToeGrid(),
@@ -39,11 +48,9 @@ export default {
       return symbol !== Symbol.None;
     },
     gameTurn() {
-      if (this.currentTurn == Symbol.Cross) {
-        this.currentTurn = Symbol.Nought
-      } else {
-        this.currentTurn = Symbol.Cross
-      }
+      this.currentTurn = this.currentTurn == Symbol.Cross
+        ? Symbol.Nought
+        : Symbol.Cross;
     },
   },
 }
@@ -60,9 +67,9 @@ export default {
 }
 
 .board {
-  margin: 16px;
-  height: calc(min(80vh, 100vw) - 32px);
-  width: calc(min(80vh, 100vw) - 32px);
+  margin: 1vmin;
+  height: min(65vh, 100vw);
+  width: min(65vh, 100vw);
 }
 </style>
   

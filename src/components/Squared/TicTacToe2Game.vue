@@ -21,7 +21,15 @@
       </div>
     </div>
 
-    <Controls :players-turn="currentTurn" @resetGame="resetGame" />
+    <InfoBar :current-turn="currentTurn" @resetGame="resetGame">
+      <template v-slot:player1>
+        <CrossSymbol />
+      </template>
+
+      <template v-slot:player2>
+        <CircleSymbol />
+      </template>
+    </InfoBar>
   </div>
 </template>
   
@@ -31,10 +39,10 @@ import { Symbol } from '@/models/SymbolType';
 import BoardVue from '@/components/TicTacToeBoard.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
-import Controls from '../Controls.vue';
+import InfoBar from '@/components/InfoBar.vue';
 
 export default {
-  components: { BoardVue, CircleSymbol, CrossSymbol, Controls },
+  components: { BoardVue, CircleSymbol, CrossSymbol, InfoBar },
   data() {
     return {
       board: new TicTacToeGrid(),
@@ -112,9 +120,9 @@ export default {
 .squares,
 .overlay,
 .winner {
-  margin: 16px 16px 16px 16px;
-  height: calc(min(80vh, 100vw) - 32px);
-  width: calc(min(80vh, 100vw) - 32px);
+  margin: 1vh;
+  height: min(65vh, 100vw);
+  width: min(65vh, 100vw);
 }
 
 .three-by-three-grid {

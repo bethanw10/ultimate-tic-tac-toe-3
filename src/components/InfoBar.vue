@@ -3,20 +3,24 @@
     <div class="scores">
       <div class="score">
         <div class="turn" :class="currentTurn == 2 ? 'grey' : 'red'">
-          <div>PLAYER</div>
-          <img class="turn-symbol" src="/src/assets/one.svg" />
+          <div class="player">PLAYER</div>
+          <slot class="test" name="player1">
+            <OneSymbol />
+          </slot>
         </div>
-        <div class="total">{{ player1Score }}</div>
+        <div v-if="showScores" class="total">{{ player1Score }}</div>
       </div>
 
       <div class="vs">vs</div>
 
       <div class="score">
         <div class="turn" :class="currentTurn == 1 ? 'grey' : 'blue'">
-          <div>PLAYER</div>
-          <img class="turn-symbol" src="/src/assets/two.svg" />
+          <div class="player">PLAYER</div>
+          <slot name="player2">
+            <TwoSymbol />
+          </slot>
         </div>
-        <div class="total">{{ player2Score }}</div>
+        <div v-if="showScores" class="total">{{ player2Score }}</div>
       </div>
     </div>
     <img class="reset" @click="resetGame" src="/src/assets/reset.svg" />
@@ -26,13 +30,19 @@
 <script lang="ts">
 import { Symbol } from '@/models/SymbolType';
 import type { PropType } from 'vue';
+import OneSymbol from './Symbols/OneSymbol.vue';
+import TwoSymbol from './Symbols/TwoSymbol.vue';
 
 export default {
-  name: 'ControlsComp',
+  name: "ControlsComp",
+  components: { OneSymbol, TwoSymbol },
   props: {
     currentTurn: {
       type: Number as PropType<Symbol>,
       required: true
+    },
+    showScores: {
+      type: Boolean
     },
     player1Score: {
       type: Number
@@ -44,11 +54,11 @@ export default {
   data() {
     return {
       Symbol,
-    }
+    };
   },
   methods: {
     resetGame() {
-      this.$emit("reset-game")
+      this.$emit("reset-game");
     }
   },
 }
@@ -88,7 +98,6 @@ export default {
 .turn {
   padding: 1.5vh 3vh;
   flex: 1;
-  border-radius: 1vh 1vh 0 0;
   align-items: center;
   justify-content: space-evenly;
   display: flex;
@@ -96,9 +105,14 @@ export default {
   font-size: small;
   font-variant: small-caps;
   color: white;
-  position: relative
+  position: relative;
+  border-radius: 1vh 1vh 0 0;
+  letter-spacing: .1em;
 }
 
+.turn:only-child {
+  border-radius: 1vh;
+}
 .turn.red {
   background-color: #f75c6698;
 }
@@ -107,17 +121,17 @@ export default {
   content: '';
   position: absolute;
   top: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid transparent;
+  border-left: 1.2vh solid transparent;
+  border-right: 1.2vh solid transparent;
+  border-top: 1.2vh solid transparent;
 }
 
 .turn.red::before {
-  border-top: 10px solid var(--red);
+  border-top: 1.2vh solid var(--red);
 }
 
 .turn.blue::before {
-  border-top: 10px solid var(--blue);
+  border-top: 1.2vh solid var(--blue);
 }
 
 .turn.blue {
@@ -128,14 +142,14 @@ export default {
   background-color: #aaa;
 }
 
-.turn-symbol {
+.turn :not(.player) {
   display: block;
   width: 8vh;
   height: 8vh;
   padding: .5vh;
 }
 
-.turn.grey .turn-symbol {
+.turn.grey :not(.player) {
   filter: contrast(0%);
 }
 

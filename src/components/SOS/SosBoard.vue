@@ -3,7 +3,7 @@
     <div class="squares grid">
       <template v-for="(squares, y) in board.grid" :key="y">
         <template v-for="(symbol, x) in squares" :key="x">
-          <div class="square" :class="{ full: squareIsFull(symbol), disabled: disabled }">
+          <div class="square" :class="{ full: squareIsFull(symbol) }">
             <div class="choice" v-if="symbol == Symbol.None">
               <div class="s" @click="pickSquare(x, y, Symbol.S)">
                 <SSymbol class="symbol" color="#887f79" />
@@ -15,6 +15,7 @@
                 <CircleSymbol class="symbol" color="#887f79" />
               </div>
             </div>
+
             <SSymbol v-if="symbol == Symbol.S" class="symbol" animate color="#666" />
             <CircleSymbol v-if="symbol == Symbol.O" class="symbol" animate color="#666" />
 
@@ -46,10 +47,6 @@ export default {
     playersTurn: {
       type: Number,
       required: true
-    },
-    disabled: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -70,11 +67,6 @@ export default {
     },
     pickSquare(x: number, y: number, symbol: Symbol) {
       let sosMade = this.board.playMove(x, y, symbol, this.playersTurn)
-
-      console.log(sosMade);
-      // if (this.gameWon) {
-      //   this.$emit('win', this.board.winner())
-      // }
 
       this.$emit('turn', sosMade);
     },
@@ -119,6 +111,57 @@ export default {
   cursor: pointer;
   background: var(--white);
 }
+
+.square.full {
+  cursor: auto;
+  pointer-events: none;
+}
+
+.symbol {
+  margin: 15%;
+  display: block;
+}
+
+.choice {
+  height: 100%;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  display: none;
+}
+
+.square:active .choice {
+  display: flex;
+}
+
+@media (hover: hover) {
+  .square:hover .choice {
+    display: flex;
+  }
+
+  .o:hover .symbol,
+  .s:hover .symbol {
+    margin: 10%;
+  }
+}
+
+.s,
+.o {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  content: '';
+  width: 5%;
+  height: 80%;
+  background: #0000001f;
+  border-radius: 2em;
+  pointer-events: none;
+}
+
 
 .line {
   width: 210%;
@@ -174,65 +217,6 @@ export default {
 .line.southeast,
 .line.southwest {
   width: 296.98%;
-}
-
-.square.full {
-  cursor: auto;
-  pointer-events: none;
-}
-
-.square.disabled {
-  cursor: auto;
-  pointer-events: none;
-}
-
-.symbol {
-  margin: 15%;
-  display: block;
-}
-
-.choice {
-  height: 100%;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-  display: none;
-}
-
-.choice .symbol {
-  margin: 15%;
-}
-
-.square:active .choice {
-  display: flex;
-}
-
-@media (hover: hover) {
-  .square:hover .choice {
-    display: flex;
-  }
-
-  .o:hover .symbol,
-  .s:hover .symbol {
-    margin: 10%;
-  }
-}
-
-.s,
-.o {
-  height: 100%;
-  width: 50%;
-  display: flex;
-  align-items: center;
-}
-
-.divider {
-  content: '';
-  width: 5%;
-  height: 80%;
-  background: #0000001f;
-  border-radius: 2em;
-  pointer-events: none;
 }
 
 .overlay {

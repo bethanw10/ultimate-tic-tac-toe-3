@@ -1,10 +1,8 @@
 <template>
   <div class="tic-tac-toe">
     <SosBoardView class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
-    <InfoBar 
-      @reset-game="resetGame" 
-      :current-turn="currentTurn" 
-      :player1-score="player1TotalSos" :player2-score="player2TotalSos" />
+    <InfoBar @reset-game="resetGame" :current-turn="currentTurn" show-scores :player1-score="player1TotalSos"
+      :player2-score="player2TotalSos" />
   </div>
 </template>
     
@@ -44,12 +42,18 @@ export default {
       return symbol !== Symbol.None;
     },
     gameTurn(numSosMade: number) {
-      if (this.currentTurn == 1) {
-        this.player1TotalSos += numSosMade;
-        this.currentTurn = 2;
+      if (numSosMade == 0) {
+        if (this.currentTurn == 1) {
+          this.currentTurn = 2;
+        } else {
+          this.currentTurn = 1;
+        }
       } else {
-        this.player2TotalSos += numSosMade;
-        this.currentTurn = 1;
+        if (this.currentTurn == 1) {
+          this.player1TotalSos += numSosMade;
+        } else {
+          this.player2TotalSos += numSosMade;
+        }
       }
     },
   },

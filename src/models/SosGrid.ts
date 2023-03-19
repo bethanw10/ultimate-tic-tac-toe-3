@@ -1,4 +1,4 @@
-import { Directions, type Direction } from "./Direction";
+import { Directions } from "./Direction";
 import { Symbol } from "./SymbolType";
 
 interface SosSequence {
