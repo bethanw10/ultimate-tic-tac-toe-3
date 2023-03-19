@@ -1,28 +1,10 @@
 <template>
   <div class="tic-tac-toe">
     <SosBoardView class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
-    <div class="controls">
-      <div class="scores">
-        <div class="score">
-          <div class="turn" :class="currentTurn == 2 ? 'grey' : 'red'">
-            <div>PLAYER</div>
-            <img class="turn-symbol" :class="{ grey: currentTurn == 2 }" src="/src/assets/one.svg" />
-          </div>
-          <div class="total">{{ player1TotalSos }}</div>
-        </div>
-
-        <div class="vs">vs</div>
-
-        <div class="score">
-          <div class="turn" :class="currentTurn == 1 ? 'grey' : 'blue'">
-            <div>PLAYER</div>
-            <img class="turn-symbol" :class="{ grey: currentTurn == 1 }" src="/src/assets/two.svg" />
-          </div>
-          <div class="total">{{ player2TotalSos }}</div>
-        </div>
-      </div>
-      <img class="reset" @click="resetGame" src="/src/assets/reset.svg" />
-    </div>
+    <InfoBar 
+      @reset-game="resetGame" 
+      :current-turn="currentTurn" 
+      :player1-score="player1TotalSos" :player2-score="player2TotalSos" />
   </div>
 </template>
     
@@ -30,9 +12,10 @@
 import { SosGrid } from '@/models/SosGrid';
 import { Symbol } from '@/models/SymbolType';
 import SosBoardView from '@/components/SOS/SosBoard.vue';
+import InfoBar from '../InfoBar.vue';
 
 export default {
-  components: { SosBoardView },
+  components: { SosBoardView, InfoBar },
   data() {
     return {
       board: new SosGrid(),
@@ -87,111 +70,6 @@ export default {
   margin: 1vmin;
   height: min(65vh, 100vw);
   width: min(65vh, 100vw);
-}
-
-.controls {
-  height: calc(25vh - 16px);
-  width: calc(min(60vh, 100vw) - 32px);
-  padding: 1vh;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  align-items: center;
-}
-
-.scores {
-  display: flex;
-  align-items: center;
-  font-family: Nice Sugar;
-  height: 100%;
-}
-
-.score {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  font-size: 2em;
-  background: #e6d6ca;
-  border-radius: 1vh;
-}
-
-.turn {
-  padding: 1.5vh 3vh;
-  flex: 1;
-  border-radius: 1vh 1vh 0 0;
-  align-items: center;
-  justify-content: space-evenly;
-  display: flex;
-  flex-direction: column;
-  font-size: small;
-  font-variant: small-caps;
-  color: white;
-  position: relative
-}
-
-.turn.red {
-  background-color: #f75c6698;
-}
-
-.turn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid transparent;
-}
-
-.turn.red::before {
-  border-top: 10px solid var(--red);
-}
-
-.turn.blue::before {
-  border-top: 10px solid var(--blue);
-}
-
-.turn.blue {
-  background-color: #90c5d8cc;
-}
-
-.turn.grey {
-  background-color: #aaa;
-}
-
-.turn-symbol {
-  display: block;
-  width: 8vh;
-  height: 8vh;
-  padding: .5vh;
-}
-
-.turn-symbol.grey {
-  filter: contrast(0%);
-}
-
-.total {
-  padding: 1vh 0;
-}
-
-.vs {
-  color: #2b2928;
-  font-size: 2em;
-  margin: 1.5vh;
-}
-
-.reset {
-  display: block;
-  padding: 2vh;
-  cursor: pointer;
-  position: absolute;
-  height: 8vh;
-  background: var(--white);
-  border-radius: 2vh;
-  right: 0;
 }
 </style>
     

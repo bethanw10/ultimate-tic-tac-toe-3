@@ -203,13 +203,19 @@ export default {
   margin: 15%;
 }
 
-.square:hover .choice {
+.square:active .choice {
   display: flex;
 }
 
-.o:hover .symbol,
-.s:hover .symbol {
-  margin: 10%;
+@media (hover: hover) {
+  .square:hover .choice {
+    display: flex;
+  }
+
+  .o:hover .symbol,
+  .s:hover .symbol {
+    margin: 10%;
+  }
 }
 
 .s,
