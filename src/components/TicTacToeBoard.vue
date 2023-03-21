@@ -1,13 +1,6 @@
 <template>
   <div class="board-container">
-    <div class="squares three-by-three-grid">
-      <template v-for="(symbol, i) in board" :key="i">
-        <div class="square" :class="{ full: squareIsFull(symbol), disabled: disabled }" @click="pickSquare(i)">
-          <CircleSymbol v-if="symbol == Symbol.Nought" class="symbol" animate />
-          <CrossSymbol v-if="symbol == Symbol.Cross" class="symbol" animate />
-        </div>
-      </template>
-    </div>
+    <TicTacToeGridView :board="board" :players-turn="playersTurn" :disabled="disabled" @turn="$emit('turn')"/>
     <div class="overlay three-by-three-grid">
       <template v-for="(_, i) in board" :key="i">
         <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
@@ -28,10 +21,11 @@ import { Symbol } from '@/models/SymbolType';
 import type { PropType } from 'vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
+import TicTacToeGridView from './TicTacToeGrid.vue';
 
 export default {
-  name: 'BoardView',
-  components: { CircleSymbol, CrossSymbol },
+  name: 'TicTacToeBoard',
+  components: { CircleSymbol, CrossSymbol, TicTacToeGridView },
   props: {
     board: {
       type: TicTacToeGrid,
@@ -102,32 +96,6 @@ export default {
 .winning-symbol {
   height: 100%;
   width: 100%;
-}
-
-.squares {
-  position: relative;
-}
-
-.square {
-  position: relative;
-  border-radius: 10%;
-  padding: 15%;
-  cursor: pointer;
-  background: rgb(230 214 202);
-}
-
-.square.full {
-  cursor: auto;
-  pointer-events: none;
-}
-
-.square.disabled {
-  cursor: auto;
-  pointer-events: none;
-}
-
-.symbol {
-  display: block;
 }
 
 .overlay {
