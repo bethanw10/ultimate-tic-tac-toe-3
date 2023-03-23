@@ -1,17 +1,11 @@
 <template>
   <div class="board-container">
-    <TicTacToeGridView :board="board" :players-turn="playersTurn" :disabled="disabled" @turn="$emit('turn')"/>
-    <div class="overlay three-by-three-grid">
-      <template v-for="(_, i) in board" :key="i">
-        <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
-        <div v-if="board.winner() == Symbol.Cross" class="overlay-square crosses"></div>
-        <div v-if="!gameWon && disabled" class="overlay-square disabled"></div>
-      </template>
-    </div>
-    <div class="winner" v-if="gameWon">
-      <CircleSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol" />
-      <CrossSymbol v-if="board.winner() == Symbol.Cross" class="winning-symbol" />
-    </div>
+    <TicTacToeGridVue :board="board" :players-turn="playersTurn" :disabled="disabled" @turn="pickSquare($event)" />
+    <WinnerOverlayVue v-if="gameWon || disabled" 
+      :player1-win="board.winner() === Symbol.Cross" 
+      :grid-size="board.length"
+      :disabled="!gameWon && disabled" 
+      player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
   </div>
 </template>
   
@@ -19,13 +13,12 @@
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/SymbolType';
 import type { PropType } from 'vue';
-import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
-import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
-import TicTacToeGridView from './TicTacToeGrid.vue';
+import TicTacToeGridVue from './TicTacToeGrid.vue';
+import WinnerOverlayVue from './WinnerOverlay.vue';
 
 export default {
   name: 'TicTacToeBoard',
-  components: { CircleSymbol, CrossSymbol, TicTacToeGridView },
+  components: { TicTacToeGridVue, WinnerOverlayVue },
   props: {
     board: {
       type: TicTacToeGrid,
@@ -44,8 +37,6 @@ export default {
     return {
       Symbol,
     }
-  },
-  created() {
   },
   computed: {
     gameWon() {

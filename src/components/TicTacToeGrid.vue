@@ -83,7 +83,7 @@ export default {
 
 .square {
   position: relative;
-  border-radius: 10%;
+  border-radius: 1vh;
   padding: 15%;
   cursor: pointer;
   background: rgb(230 214 202);

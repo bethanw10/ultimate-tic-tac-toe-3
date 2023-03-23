@@ -1,24 +1,19 @@
 <template>
   <div class="tic-tac-toe-squared">
-    <div class="board-container">
+    <div class="parent-board-container">
       <div class="squares three-by-three-grid">
         <template v-for="(childBoard, i) in childBoards" :key="i">
-          <BoardVue @win="childGameWon(i, $event)" @turn="childGameTurn($event)" :board="childBoard"
-            :players-turn="currentTurn" :disabled="currentBoard !== null && i !== currentBoard" />
+          <BoardVue @win="childGameWon(i, $event)" @turn="childGameTurn($event)" 
+            :board="childBoard"
+            :players-turn="currentTurn" 
+            :disabled="currentBoard !== null && i !== currentBoard" />
         </template>
       </div>
 
-      <div class="overlay three-by-three-grid" v-if="gameWon">
-        <template v-for="(_, i) in board" :key="i">
-          <div v-if="board.winner() == Symbol.Nought" class="overlay-square naughts"></div>
-          <div v-if="board.winner() == Symbol.Cross" class="overlay-square crosses"></div>
-        </template>
-      </div>
-
-      <div class="winner" v-if="gameWon">
-        <CircleSymbol v-if="board.winner() == Symbol.Nought" class="winning-symbol" />
-        <CrossSymbol v-if="board.winner() == Symbol.Cross" class="winning-symbol" />
-      </div>
+      <WinnerOverlayVue v-if="gameWon" 
+        :player1-win="board.winner() === Symbol.Cross" 
+        :grid-size="board.length"
+        player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
     </div>
 
     <InfoBar :current-turn="currentTurn" @resetGame="resetGame">
@@ -40,9 +35,10 @@ import BoardVue from '@/components/TicTacToeBoard.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 import InfoBar from '@/components/InfoBar.vue';
+import WinnerOverlayVue from '../WinnerOverlay.vue';
 
 export default {
-  components: { BoardVue, CircleSymbol, CrossSymbol, InfoBar },
+  components: { BoardVue, CircleSymbol, CrossSymbol, InfoBar, WinnerOverlayVue },
   data() {
     return {
       board: new TicTacToeGrid(),
@@ -59,7 +55,7 @@ export default {
   },
   computed: {
     gameWon() {
-      return this.board.winner() !== Symbol.None
+      return this.board.winner() == Symbol.None
     }
   },
   methods: {
@@ -102,27 +98,23 @@ export default {
 <style scoped>
 .tic-tac-toe-squared {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   height: 100%;
   width: 100%;
+  align-items: center;
   justify-content: space-around;
+  flex-direction: column;
 }
 
-.board-container {
+.parent-board-container {
   display: flex;
+  position: relative;
   font-family: 'Roboto', sans-serif;
   flex-wrap: wrap-reverse;
-  align-items: center;
-  justify-content: center;
-}
-
-.squares,
-.overlay,
-.winner {
-  margin: 1vh;
+  margin: 1vmin;
   height: min(65vh, 100vw);
   width: min(65vh, 100vw);
+  align-items: center;
+  justify-content: center;
 }
 
 .three-by-three-grid {
@@ -134,6 +126,8 @@ export default {
 
 .squares {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .winner {
