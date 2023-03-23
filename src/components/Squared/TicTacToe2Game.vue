@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     gameWon() {
-      return this.board.winner() == Symbol.None
+      return this.board.winner() !== Symbol.None
     }
   },
   methods: {
