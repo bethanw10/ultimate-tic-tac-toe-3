@@ -4,7 +4,7 @@
       <div class="score">
         <div class="turn" :class="currentTurn == 2 ? 'grey' : 'red'">
           <div class="player">PLAYER</div>
-          <slot class="test" name="player1">
+          <slot name="player1">
             <OneSymbol />
           </slot>
         </div>

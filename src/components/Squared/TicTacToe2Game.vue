@@ -3,16 +3,12 @@
     <div class="parent-board-container">
       <div class="squares three-by-three-grid">
         <template v-for="(childBoard, i) in childBoards" :key="i">
-          <BoardVue @win="childGameWon(i, $event)" @turn="childGameTurn($event)" 
-            :board="childBoard"
-            :players-turn="currentTurn" 
-            :disabled="currentBoard !== null && i !== currentBoard" />
+          <ChildBoardVue @win="childGameWon(i, $event)" @turn="childGameTurn($event)" :board="childBoard"
+            :players-turn="currentTurn" :disabled="currentBoard !== null && i !== currentBoard" />
         </template>
       </div>
 
-      <WinnerOverlayVue v-if="gameWon" 
-        :player1-win="board.winner() === Symbol.Cross" 
-        :grid-size="board.length"
+      <WinnerOverlayVue v-if="gameWon" :player1-win="board.winner() === Symbol.Cross" :grid-size="board.length"
         player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
     </div>
 
@@ -31,14 +27,14 @@
 <script lang="ts">
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/Symbol'
-import BoardVue from '@/components/TicTacToeBoard.vue';
+import ChildBoardVue from '@/components/Squared/TicTacToe2ChildGame.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 import InfoBar from '@/components/InfoBar.vue';
 import WinnerOverlayVue from '../WinnerOverlay.vue';
 
 export default {
-  components: { BoardVue, CircleSymbol, CrossSymbol, InfoBar, WinnerOverlayVue },
+  components: { ChildBoardVue, CircleSymbol, CrossSymbol, InfoBar, WinnerOverlayVue },
   data() {
     return {
       board: new TicTacToeGrid(),
@@ -115,6 +111,15 @@ export default {
   width: min(65vh, 100vw);
   align-items: center;
   justify-content: center;
+}
+
+.board-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .three-by-three-grid {

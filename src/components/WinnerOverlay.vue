@@ -73,7 +73,7 @@ export default {
 }
 
 .overlay-square.blue {
-    background-color: rgba(70, 100, 109, 0.8);
+    background-color: rgba(44, 92, 107, 0.8);
 }
 
 .overlay-square.disabled {

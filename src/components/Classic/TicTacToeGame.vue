@@ -1,6 +1,14 @@
 <template>
   <div class="tic-tac-toe">
-    <BoardVue class="board" @turn="gameTurn()" :board="board" :players-turn="currentTurn" />
+    <div class="board-container">
+      <TicTacToeGridVue @turn="gameTurn()" :board="board" :players-turn="currentTurn" />
+
+      <WinnerOverlayVue v-if="gameWon" 
+        :player1-win="board.winner() === Symbol.Cross" 
+        :grid-size="board.length"
+        player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
+    </div>
+
     <InfoBar :current-turn="currentTurn" @resetGame="resetGame">
       <template v-slot:player1>
         <CrossSymbol />
@@ -15,13 +23,14 @@
 <script lang="ts">
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/Symbol';
-import BoardVue from '@/components/TicTacToeBoard.vue';
 import InfoBar from '@/components/InfoBar.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
+import TicTacToeGridVue from '../TicTacToeGrid.vue';
+import WinnerOverlayVue from '../WinnerOverlay.vue';
 
 export default {
-  components: { BoardVue, InfoBar, CircleSymbol, CrossSymbol },
+  components: { InfoBar, CircleSymbol, CrossSymbol, TicTacToeGridVue, WinnerOverlayVue },
   data() {
     return {
       board: new TicTacToeGrid(),
@@ -66,7 +75,13 @@ export default {
   flex-direction: column;
 }
 
-.board {
+.board-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+
   margin: 1vmin;
   height: min(65vh, 100vw);
   width: min(65vh, 100vw);

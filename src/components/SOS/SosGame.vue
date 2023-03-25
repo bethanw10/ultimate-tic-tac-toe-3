@@ -1,6 +1,6 @@
 <template>
   <div class="tic-tac-toe">
-    <SosBoardView class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
+    <SosBoardVue class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
     <InfoBar @reset-game="resetGame" :current-turn="currentTurn" show-scores :player1-score="player1TotalSos"
       :player2-score="player2TotalSos" />
   </div>
@@ -9,11 +9,11 @@
 <script lang="ts">
 import { SosGrid } from '@/models/SosGrid';
 import { Symbol } from '@/models/Symbol';
-import SosBoardView from '@/components/SOS/SosBoard.vue';
-import InfoBar from '../InfoBar.vue';
+import SosBoardVue from '@/components/SOS/SosBoard.vue';
+import InfoBar from '@/components/InfoBar.vue';
 
 export default {
-  components: { SosBoardView, InfoBar },
+  components: { SosBoardVue, InfoBar },
   data() {
     return {
       board: new SosGrid(),

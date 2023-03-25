@@ -13,8 +13,8 @@
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
-import TicTacToeGridVue from './TicTacToeGrid.vue';
-import WinnerOverlayVue from './WinnerOverlay.vue';
+import TicTacToeGridVue from '../TicTacToeGrid.vue';
+import WinnerOverlayVue from '../WinnerOverlay.vue';
 
 export default {
   name: 'TicTacToeBoard',
@@ -62,14 +62,12 @@ export default {
   
 <style scoped>
 .board-container {
+  height: 100%;
   display: flex;
   position: relative;
-  font-family: 'Roboto', sans-serif;
   flex-wrap: wrap-reverse;
-  height: 100%;
   align-items: center;
   justify-content: center;
-  color: #ddd;
 }
 </style>
   

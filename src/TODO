@@ -11,3 +11,25 @@ brpken link?
 Ultimate ultimate tic tac toe?? Recurse
 AI!
 Line through win
+
+
+
+
+
+-
+----
+
+          <!-- <div class="board-container">
+              <TicTacToeGridVue 
+                @win="childGameWon(i, $event)" 
+                @turn="childGameTurn($event)" 
+                :board="childBoard" 
+                :players-turn="currentTurn" 
+                :disabled="currentBoard !== null && i !== currentBoard" />
+
+              <WinnerOverlayVue v-if="childBoard.winner() !== Symbol.None || (currentBoard !== null && i !== currentBoard)" 
+                :player1-win="childBoard.winner() === Symbol.Cross" 
+                :grid-size="board.length"
+                :disabled="childBoard.winner() == Symbol.None && (currentBoard !== null && i !== currentBoard)"
+                player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
+            </div> -->

@@ -92,10 +92,7 @@ export default {
 }
 
 .squares,
-.square,
-.overlay,
-.overlay-square,
-.winning-symbol {
+.square {
   height: 100%;
   width: 100%;
 }
@@ -106,7 +103,7 @@ export default {
 
 .square {
   position: relative;
-  border-radius: 10%;
+  border-radius: 1vh;
   cursor: pointer;
   background: var(--white);
 }
@@ -133,7 +130,6 @@ export default {
   display: flex;
 }
 
-
 .square:hover .choice {
   display: flex;
 }
@@ -142,7 +138,6 @@ export default {
 .s:hover .symbol {
   margin: 10%;
 }
-
 
 @media (hover: none) {
   .square .choice {
@@ -166,7 +161,6 @@ export default {
   border-radius: 2em;
   pointer-events: none;
 }
-
 
 .line {
   width: 210%;
@@ -224,41 +218,6 @@ export default {
 .line.southeast,
 .line.southwest {
   width: 296.98%;
-}
-
-.overlay {
-  position: absolute;
-  pointer-events: none;
-}
-
-.overlay-square {
-  position: relative;
-  border-radius: 10%;
-}
-
-.overlay-square.crosses {
-  background-color: rgba(99, 39, 42, 0.8);
-}
-
-.overlay-square.naughts {
-  background-color: rgba(70, 100, 109, 0.8);
-}
-
-.overlay-square.disabled {
-  background-color: rgba(85, 85, 85, 0.8);
-}
-
-.winner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.winning-symbol {
-  display: block;
-  padding: 15%;
 }
 </style>
   
