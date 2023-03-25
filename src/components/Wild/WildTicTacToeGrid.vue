@@ -3,13 +3,13 @@
     <template v-for="(symbol, i) in board" :key="i">
       <div class="square" :class="{ full: squareIsFull(symbol)}">
         <div class="choice" v-if="symbol == Symbol.None">
-          <div class="s" @click="pickSquare(i, Symbol.Cross)">
+          <div class="cross" @click="pickSquare(i, Symbol.Cross)">
             <CrossSymbol class="symbol" color="#a39993" />
           </div>
 
           <div class="divider"></div>
 
-          <div class="o" @click="pickSquare(i, Symbol.Nought)">
+          <div class="nought" @click="pickSquare(i, Symbol.Nought)">
             <CircleSymbol class="symbol" color="#a39993" />
           </div>
         </div>
@@ -129,8 +129,8 @@ export default {
   display: flex;
 }
 
-.o:hover .symbol,
-.s:hover .symbol {
+.cross:hover .symbol,
+.nought:hover .symbol {
   margin: 10%;
 }
 
@@ -140,8 +140,8 @@ export default {
   }
 }
 
-.s,
-.o {
+.cross,
+.nought {
   height: 100%;
   width: 50%;
   display: flex;

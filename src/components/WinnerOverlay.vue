@@ -1,6 +1,6 @@
 <template>
-    <div class="overlay three-by-three-grid">
-        <template v-for="(_, i) in gridSize" :key="i">
+    <div class="overlay grid" :style="gridStyle">
+        <template v-for="(_, i) in gridSize * gridSize" :key="i">
             <div v-if="disabled" class="overlay-square disabled"></div>
             <template v-else>
                 <div v-if="player1Win" class="overlay-square red"></div>
@@ -37,15 +37,22 @@ export default {
             type: Boolean,
         },
     },
+    computed: {
+        gridStyle() {
+            return {
+                gridTemplateRows: `repeat(${this.gridSize}, 1fr)`,
+                gridTemplateColumns: `repeat(${this.gridSize}, 1fr)`
+            };
+        }
+    }
 }
 </script>
     
 <style scoped>
-.three-by-three-grid {
+.grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
     grid-gap: 2%;
+    z-index: 20;
 }
 
 .squares,
@@ -86,6 +93,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 30;
 }
 
 .winning-symbol {

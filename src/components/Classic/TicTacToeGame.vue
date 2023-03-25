@@ -5,7 +5,7 @@
 
       <WinnerOverlayVue v-if="gameWon" 
         :player1-win="board.winner() === Symbol.Cross" 
-        :grid-size="board.length"
+        :grid-size="3"
         player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
     </div>
 

@@ -134,36 +134,5 @@ export default {
   width: 100%;
   height: 100%;
 }
-
-.winner {
-  position: absolute;
-}
-
-.winning-symbol {
-  width: 100%;
-  height: 100%;
-  display: block;
-  padding: 15%;
-  user-select: none;
-}
-
-.overlay {
-  position: absolute;
-}
-
-.overlay-square {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  border-radius: 2%;
-}
-
-.overlay-square.crosses {
-  background-color: #5a2528a9;
-}
-
-.overlay-square.naughts {
-  background-color: #34474ea1;
-}
 </style>
   

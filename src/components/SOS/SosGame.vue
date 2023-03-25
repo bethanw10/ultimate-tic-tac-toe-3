@@ -1,6 +1,9 @@
 <template>
   <div class="tic-tac-toe">
-    <SosBoardVue class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
+    <div class="board-container">
+      <SosBoardVue class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
+      <WinnerOverlayVue v-if="gameOver" :grid-size="board.size" :player1-win="player1TotalSos > player2TotalSos" />
+    </div>
     <InfoBar @reset-game="resetGame" :current-turn="currentTurn" show-scores :player1-score="player1TotalSos"
       :player2-score="player2TotalSos" />
   </div>
@@ -11,9 +14,10 @@ import { SosGrid } from '@/models/SosGrid';
 import { Symbol } from '@/models/Symbol';
 import SosBoardVue from '@/components/SOS/SosBoard.vue';
 import InfoBar from '@/components/InfoBar.vue';
+import WinnerOverlayVue from '@/components/WinnerOverlay.vue';
 
 export default {
-  components: { SosBoardVue, InfoBar },
+  components: { SosBoardVue, InfoBar, WinnerOverlayVue },
   data() {
     return {
       board: new SosGrid(),
@@ -24,7 +28,7 @@ export default {
     }
   },
   computed: {
-    gameWon() {
+    gameOver() {
       return this.board.isBoardFull();
     }
   },
@@ -43,11 +47,7 @@ export default {
     },
     gameTurn(numSosMade: number) {
       if (numSosMade == 0) {
-        if (this.currentTurn == 1) {
-          this.currentTurn = 2;
-        } else {
-          this.currentTurn = 1;
-        }
+        this.currentTurn = this.currentTurn == 1 ? 2 : 1;
       } else {
         if (this.currentTurn == 1) {
           this.player1TotalSos += numSosMade;
@@ -70,7 +70,13 @@ export default {
   flex-direction: column;
 }
 
-.board {
+.board-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+
   margin: 1vmin;
   height: min(65vh, 100vw);
   width: min(65vh, 100vw);

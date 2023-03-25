@@ -3,7 +3,7 @@
     <TicTacToeGridVue :board="board" :players-turn="playersTurn" :disabled="disabled" @turn="pickSquare($event)" />
     <WinnerOverlayVue v-if="gameWon || disabled" 
       :player1-win="board.winner() === Symbol.Cross" 
-      :grid-size="board.length"
+      :grid-size="3"
       :disabled="!gameWon && disabled" 
       player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
   </div>

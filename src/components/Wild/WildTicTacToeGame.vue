@@ -2,7 +2,7 @@
   <div class="tic-tac-toe">
     <div class="board-container">
       <WildTicTacToeGridVue @turn="gameTurn()" :board="board" :players-turn="Symbol.Cross" />
-      <WinnerOverlayVue v-if="gameWon" :grid-size="board.length" :player1-win="currentTurn == 1" />
+      <WinnerOverlayVue v-if="gameWon" :grid-size="3" :player1-win="currentTurn == 1" />
     </div>
     <InfoBar :current-turn="currentTurn" @resetGame="resetGame" />
   </div>

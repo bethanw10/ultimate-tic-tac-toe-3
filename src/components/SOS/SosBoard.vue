@@ -1,31 +1,29 @@
 <template>
-  <div class="board-container">
-    <div class="squares grid">
-      <template v-for="(squares, y) in board.grid" :key="y">
-        <template v-for="(symbol, x) in squares" :key="x">
-          <div class="square" :class="{ full: squareIsFull(symbol) }">
-            <div class="choice" v-if="symbol == Symbol.None">
-              <div class="s" @click="pickSquare(x, y, Symbol.S)">
-                <SSymbol class="symbol" color="#a39993" />
-              </div>
-
-              <div class="divider"></div>
-
-              <div class="o" @click="pickSquare(x, y, Symbol.O)">
-                <CircleSymbol class="symbol" color="#a39993" />
-              </div>
+  <div class="squares grid">
+    <template v-for="(squares, y) in board.grid" :key="y">
+      <template v-for="(symbol, x) in squares" :key="x">
+        <div class="square" :class="{ full: squareIsFull(symbol) }">
+          <div class="choice" v-if="symbol == Symbol.None">
+            <div class="s" @click="pickSquare(x, y, Symbol.S)">
+              <SSymbol class="symbol" color="#a39993" />
             </div>
 
-            <SSymbol v-if="symbol == Symbol.S" class="symbol" animate color="#666" />
-            <CircleSymbol v-if="symbol == Symbol.O" class="symbol" animate color="#666" />
+            <div class="divider"></div>
 
-            <template v-for="(sequence, i) in board.sosSequences[y][x]" :key="i">
-              <div class="line" :class="[`player${sequence.player}`, sequence.direction.toLowerCase()]"></div>
-            </template>
+            <div class="o" @click="pickSquare(x, y, Symbol.O)">
+              <CircleSymbol class="symbol" color="#a39993" />
+            </div>
           </div>
-        </template>
+
+          <SSymbol v-if="symbol == Symbol.S" class="symbol" animate color="#666" />
+          <CircleSymbol v-if="symbol == Symbol.O" class="symbol" animate color="#666" />
+
+          <template v-for="(sequence, i) in board.sosSequences[y][x]" :key="i">
+            <div class="line" :class="[`player${sequence.player}`, sequence.direction.toLowerCase()]"></div>
+          </template>
+        </div>
       </template>
-    </div>
+    </template>
   </div>
 </template>
   
@@ -75,20 +73,11 @@ export default {
 </script>
   
 <style scoped>
-.board-container {
-  display: flex;
-  position: relative;
-  font-family: 'Roboto', sans-serif;
-  flex-wrap: wrap-reverse;
-  align-items: center;
-  justify-content: center;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  grid-gap: 1%;
+  grid-gap: 2%;
 }
 
 .squares,
@@ -163,7 +152,7 @@ export default {
 }
 
 .line {
-  width: 210%;
+  width: 220%;
   position: absolute;
   top: calc(50% - 0.5vmin);
   right: 50%;
@@ -217,7 +206,7 @@ export default {
 .line.northeast,
 .line.southeast,
 .line.southwest {
-  width: 296.98%;
+  width: 311.12%;
 }
 </style>
   
