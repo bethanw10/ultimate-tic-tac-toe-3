@@ -14,7 +14,7 @@
   
 <script lang="ts">
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
-import { Symbol } from '@/models/SymbolType';
+import { Symbol } from '@/models/Symbol';
 import BoardVue from '@/components/TicTacToeBoard.vue';
 import InfoBar from '@/components/InfoBar.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';

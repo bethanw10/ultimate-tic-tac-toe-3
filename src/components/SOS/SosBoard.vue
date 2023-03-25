@@ -6,13 +6,13 @@
           <div class="square" :class="{ full: squareIsFull(symbol) }">
             <div class="choice" v-if="symbol == Symbol.None">
               <div class="s" @click="pickSquare(x, y, Symbol.S)">
-                <SSymbol class="symbol" color="#887f79" />
+                <SSymbol class="symbol" color="#a39993" />
               </div>
 
               <div class="divider"></div>
 
               <div class="o" @click="pickSquare(x, y, Symbol.O)">
-                <CircleSymbol class="symbol" color="#887f79" />
+                <CircleSymbol class="symbol" color="#a39993" />
               </div>
             </div>
 
@@ -31,7 +31,7 @@
   
 <script lang="ts">
 import { SosGrid } from '@/models/SosGrid';
-import { Symbol } from '@/models/SymbolType';
+import { Symbol } from '@/models/Symbol';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import SSymbol from '@/components/Symbols/SSymbol.vue';
 import "@/styles/variables.css";
@@ -75,7 +75,6 @@ export default {
 </script>
   
 <style scoped>
-
 .board-container {
   display: flex;
   position: relative;
@@ -134,14 +133,20 @@ export default {
   display: flex;
 }
 
-@media (hover: hover) {
-  .square:hover .choice {
-    display: flex;
-  }
 
-  .o:hover .symbol,
-  .s:hover .symbol {
-    margin: 10%;
+.square:hover .choice {
+  display: flex;
+}
+
+.o:hover .symbol,
+.s:hover .symbol {
+  margin: 10%;
+}
+
+
+@media (hover: none) {
+  .square .choice {
+    display: flex;
   }
 }
 
@@ -177,7 +182,9 @@ export default {
 }
 
 @keyframes appear {
-  from {width: 0%;}
+  from {
+    width: 0%;
+  }
 }
 
 .line.player2 {

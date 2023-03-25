@@ -1,8 +1,9 @@
 <template>
   <div id="nav">
     <router-link to="/TicTacToe">Tic Tac Toe</router-link> |
-    <router-link to="/">Tic Tac Toe<span class="super">2</span></router-link> |
+    <router-link to="/TicTacToeSquared">Tic Tac Toe<span class="super">2</span></router-link> |
     <router-link to="/Notakto">Notakto</router-link> |
+    <router-link to="/WildTicTacToe">Wild Tic Tac Toe</router-link> |
     <router-link to="/SOS">SOS</router-link>
   </div>
   <router-view />

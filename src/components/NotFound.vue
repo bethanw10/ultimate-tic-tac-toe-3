@@ -15,7 +15,6 @@
 </template>
     
 <script lang="ts">
-import { Symbol } from '@/models/SymbolType';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 
 export default {

@@ -28,7 +28,7 @@
 </template>
   
 <script lang="ts">
-import { Symbol } from '@/models/SymbolType';
+import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
 import OneSymbol from './Symbols/OneSymbol.vue';
 import TwoSymbol from './Symbols/TwoSymbol.vue';

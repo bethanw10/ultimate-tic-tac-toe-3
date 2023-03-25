@@ -1,5 +1,5 @@
 import { Directions } from "./Direction";
-import { Symbol } from "./SymbolType";
+import { Symbol } from "./Symbol";
 
 interface SosSequence {
     direction: string;

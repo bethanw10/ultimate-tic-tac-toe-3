@@ -1,4 +1,4 @@
-import { Symbol } from "./SymbolType";
+import { Symbol } from "./Symbol";
 
 export class TicTacToeGrid extends Array<Symbol>{
 

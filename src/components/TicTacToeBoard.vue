@@ -11,7 +11,7 @@
   
 <script lang="ts">
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
-import { Symbol } from '@/models/SymbolType';
+import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
 import TicTacToeGridVue from './TicTacToeGrid.vue';
 import WinnerOverlayVue from './WinnerOverlay.vue';
@@ -70,58 +70,6 @@ export default {
   align-items: center;
   justify-content: center;
   color: #ddd;
-}
-
-.three-by-three-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-gap: 2%;
-}
-
-.squares,
-.square,
-.symbol,
-.overlay,
-.overlay-square,
-.winning-symbol {
-  height: 100%;
-  width: 100%;
-}
-
-.overlay {
-  position: absolute;
-  pointer-events: none;
-}
-
-.overlay-square {
-  position: relative;
-  border-radius: 10%;
-}
-
-.overlay-square.crosses {
-  background-color: rgba(99, 39, 42, 0.8);
-}
-
-.overlay-square.naughts {
-  background-color: rgba(70, 100, 109, 0.8);
-}
-
-.overlay-square.disabled {
-  background-color: rgba(85, 85, 85, 0.8);
-}
-
-.winner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.winning-symbol {
-  display: block;
-  padding: 15%;
 }
 </style>
   

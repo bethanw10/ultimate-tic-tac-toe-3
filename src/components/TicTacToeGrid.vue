@@ -11,7 +11,7 @@
   
 <script lang="ts">
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
-import { Symbol } from '@/models/SymbolType';
+import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';

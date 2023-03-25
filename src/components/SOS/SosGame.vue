@@ -8,7 +8,7 @@
     
 <script lang="ts">
 import { SosGrid } from '@/models/SosGrid';
-import { Symbol } from '@/models/SymbolType';
+import { Symbol } from '@/models/Symbol';
 import SosBoardView from '@/components/SOS/SosBoard.vue';
 import InfoBar from '../InfoBar.vue';
 
