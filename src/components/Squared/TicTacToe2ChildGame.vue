@@ -2,7 +2,7 @@
   <div class="board-container">
     <TicTacToeGridVue :board="board" :players-turn="playersTurn" :disabled="disabled" @turn="pickSquare($event)" />
     <ChildOverlayVue v-if="gameWon || disabled" 
-      :crossWin="board.winner() === Symbol.Cross" 
+      :crossWin="board.winner() === GameState.CrossWins"
       :grid-size="3"
       :disabled="!gameWon && disabled" 
       player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
@@ -15,6 +15,7 @@ import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
 import TicTacToeGridVue from '../TicTacToeGrid.vue';
 import ChildOverlayVue from './ChildOverlay.vue';
+import { GameState } from '@/models/GameState';
 
 export default {
   name: 'TicTacToeBoard',
@@ -35,12 +36,12 @@ export default {
   },
   data() {
     return {
-      Symbol,
+      Symbol, GameState
     }
   },
   computed: {
     gameWon() {
-      return this.board?.winner() !== Symbol.None;
+      return this.board?.winner() !== GameState.InProgress;
     }
   },
   methods: {
@@ -51,7 +52,8 @@ export default {
       this.board.playMove(i, this.playersTurn)
 
       if (this.gameWon) {
-        this.$emit('win', this.board.winner())
+        var winner = this.board.winner() == GameState.CrossWins ? Symbol.Cross : Symbol.Nought;
+        this.$emit('win', winner)
       }
 
       this.$emit('turn', i);

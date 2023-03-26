@@ -2,7 +2,7 @@
   <div class="tic-tac-toe">
     <div class="board-container">
       <TicTacToeGridVue @turn="gameTurn()" :board="board" :players-turn="Symbol.Cross" />
-      <WinnerOverlayVue v-if="gameWon" :grid-size="3" :player1-win="currentTurn == 2" @resetGame="resetGame"/>
+      <WinnerOverlayVue v-if="gameOver" :grid-size="3" :result="gameResult" @resetGame="resetGame"/>
     </div>
     <InfoBar :current-turn="currentTurn" @resetGame="resetGame" />
   </div>
@@ -14,6 +14,7 @@ import { Symbol } from '@/models/Symbol';
 import InfoBar from '@/components/InfoBar.vue';
 import TicTacToeGridVue from '../TicTacToeGrid.vue';
 import WinnerOverlayVue from '../Overlay.vue';
+import { GameState } from '@/models/GameState';
 
 export default {
   components: { InfoBar, TicTacToeGridVue, WinnerOverlayVue },
@@ -24,11 +25,18 @@ export default {
       Symbol,
     }
   },
-  created() {
-  },
   computed: {
-    gameWon() {
-      return this.board.winner() !== Symbol.None
+    gameOver() {
+      return this.board.winner() !== GameState.InProgress
+    },
+    gameResult() {
+      var winner = this.board.winner();
+      
+      if (winner == GameState.CrossWins) {
+        return this.currentTurn == 1 ? GameState.Player2Wins : GameState.Player1Wins;
+      }
+
+      return winner;
     }
   },
   methods: {
@@ -43,7 +51,7 @@ export default {
       return symbol !== Symbol.None;
     },
     gameTurn() {
-      if (!this.gameWon) {
+      if (!this.gameOver) {
         this.currentTurn = this.currentTurn == 1 ? 2 : 1;
       }
     },

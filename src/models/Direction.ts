@@ -26,7 +26,7 @@ export class Directions {
         [Direction.NW]: { x: -1, y: -1 }
     }
 
-    // Only one for each 'unique' direction - e.g. horizontal, vertical and each diagonal
+    // Only one for each 'plane' - e.g. horizontal, vertical and each diagonal
     static Half: { [key in Direction]?: Delta } = Object.fromEntries(
         [
             Direction.N,

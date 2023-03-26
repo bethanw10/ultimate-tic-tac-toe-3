@@ -1,35 +1,40 @@
 <template>
     <div class="overlay grid" :style="gridStyle">
         <template v-for="(_, i) in gridSize * gridSize" :key="i">
-            <div v-if="disabled" class="overlay-square disabled"></div>
-            <template v-else>
-                <div v-if="player1Win" class="overlay-square red"></div>
-                <div v-if="!player1Win" class="overlay-square blue"></div>
+            <template v-if="!disabled">
+                <div v-if="redPlayerWins" class="overlay-square red"></div>
+                <div v-if="bluePlayerWins" class="overlay-square blue"></div>
+                <div v-if="result == GameState.Draw" class="overlay-square grey"></div>
             </template>
+            <div v-else class="overlay-square grey"></div>
         </template>
     </div>
     <div class="winner-info">
 
         <div class="winner" v-if="!disabled">
-            <component :is="player1Symbol" v-if="player1Win" class="winning-symbol" />
-            <component :is="player2Symbol" v-if="!player1Win" class="winning-symbol" />
-            <div>wins!</div>
+            <div v-if="result == GameState.Draw">Draw</div>
+            <template v-else>
+                <component :is="player1Symbol" v-if="redPlayerWins" class="winning-symbol" />
+                <component :is="player2Symbol" v-if="bluePlayerWins" class="winning-symbol" />
+                <div>wins!</div>
+            </template>
         </div>
 
         <div class="replay">
-            <ReplaySymbol class="replay-symbol" @click="$emit('reset-game')" color="var(--white)"/>
-            <!-- Replay? -->
+            <ReplaySymbol class="replay-symbol" @click="$emit('reset-game')" color="var(--white)" />
         </div>
     </div>
-
 </template>
     
 <script lang="ts">
+import { GameState } from '@/models/GameState';
+import type { PropType } from 'vue';
 import ReplaySymbol from './Symbols/ReplaySymbol.vue';
 
 export default {
     name: "WinnerOverlay",
     components: { ReplaySymbol },
+    data() { return { GameState } },
     props: {
         gridSize: {
             type: Number,
@@ -43,14 +48,21 @@ export default {
             type: String,
             default: "TwoSymbol"
         },
-        player1Win: {
-            type: Boolean
+        result: {
+            type: Number as PropType<GameState>,
+            required: true
         },
         disabled: {
             type: Boolean,
         },
     },
     computed: {
+        redPlayerWins() {
+            return this.result == GameState.CrossWins || this.result == GameState.Player1Wins;
+        },
+        bluePlayerWins() {
+            return this.result == GameState.NoughtWins || this.result == GameState.Player2Wins;
+        },
         gridStyle() {
             return {
                 gridTemplateRows: `repeat(${this.gridSize}, 1fr)`,
@@ -96,7 +108,7 @@ export default {
     background-color: rgba(44, 92, 107, 0.8);
 }
 
-.overlay-square.disabled {
+.overlay-square.grey {
     background-color: rgba(85, 85, 85, 0.8);
 }
 

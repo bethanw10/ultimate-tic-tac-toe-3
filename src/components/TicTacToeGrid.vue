@@ -15,6 +15,7 @@ import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
+import { GameState } from '@/models/GameState';
 
 export default {
   name: 'TicTacToeGrid',
@@ -38,11 +39,9 @@ export default {
       Symbol,
     }
   },
-  created() {
-  },
   computed: {
     gameWon() {
-      return this.board?.winner() !== Symbol.None;
+      return this.board?.winner() !== GameState.InProgress;
     }
   },
   methods: {

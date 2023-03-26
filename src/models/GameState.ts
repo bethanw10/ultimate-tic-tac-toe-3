@@ -1,4 +1,5 @@
-export enum GameResult {
+export enum GameState {
+    InProgress,
     Draw,
     CrossWins,
     NoughtWins,

@@ -2,7 +2,7 @@
   <div class="tic-tac-toe">
     <div class="board-container">
       <WildTicTacToeGridVue @turn="gameTurn()" :board="board" :players-turn="Symbol.Cross" />
-      <WinnerOverlayVue v-if="gameWon" :grid-size="3" :player1-win="currentTurn == 1" @resetGame="resetGame"/>
+      <WinnerOverlayVue v-if="gameWon" :grid-size="3" :result="gameResult" @resetGame="resetGame"/>
     </div>
     <InfoBar :current-turn="currentTurn" @resetGame="resetGame" />
   </div>
@@ -14,6 +14,7 @@ import { Symbol } from '@/models/Symbol';
 import InfoBar from '@/components/InfoBar.vue';
 import WinnerOverlayVue from '../Overlay.vue';
 import WildTicTacToeGridVue from './WildTicTacToeGrid.vue';
+import { GameState } from '@/models/GameState';
 
 export default {
   components: { InfoBar, WinnerOverlayVue, WildTicTacToeGridVue },
@@ -28,7 +29,16 @@ export default {
   },
   computed: {
     gameWon() {
-      return this.board.winner() !== Symbol.None
+      return this.board.winner() !== GameState.InProgress
+    },
+    gameResult() {
+      var winner = this.board.winner();
+      
+      if (winner == GameState.CrossWins || winner === GameState.NoughtWins) {
+        return this.currentTurn == 1 ? GameState.Player1Wins : GameState.Player2Wins;
+      }
+
+      return winner;
     }
   },
   methods: {

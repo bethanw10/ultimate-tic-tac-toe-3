@@ -2,7 +2,7 @@
   <div class="tic-tac-toe">
     <div class="board-container">
       <SosBoardVue class="board" @turn="gameTurn($event)" :board="board" :players-turn="currentTurn" />
-      <WinnerOverlayVue v-if="gameOver" @resetGame="resetGame" :grid-size="board.size" :player1-win="player1TotalSos > player2TotalSos" />
+      <WinnerOverlayVue v-if="gameOver" @resetGame="resetGame" :grid-size="board.size" :result="gameResult" />
     </div>
     <InfoBar @reset-game="resetGame" :current-turn="currentTurn" show-scores :player1-score="player1TotalSos"
       :player2-score="player2TotalSos" />
@@ -15,6 +15,7 @@ import { Symbol } from '@/models/Symbol';
 import SosBoardVue from '@/components/SOS/SosBoard.vue';
 import InfoBar from '@/components/InfoBar.vue';
 import WinnerOverlayVue from '@/components/Overlay.vue';
+import { GameState } from '@/models/GameState';
 
 export default {
   components: { SosBoardVue, InfoBar, WinnerOverlayVue },
@@ -30,6 +31,17 @@ export default {
   computed: {
     gameOver() {
       return this.board.isBoardFull();
+    },
+    gameResult() {
+      if (this.player1TotalSos > this.player2TotalSos) {
+        return GameState.Player1Wins;
+      }
+
+      if (this.player1TotalSos < this.player2TotalSos) {
+        return GameState.Player2Wins;
+      }
+
+      return GameState.Draw;
     }
   },
   methods: {
