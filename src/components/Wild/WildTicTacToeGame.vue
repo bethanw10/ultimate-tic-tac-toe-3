@@ -2,7 +2,7 @@
   <div class="tic-tac-toe">
     <div class="board-container">
       <WildTicTacToeGridVue @turn="gameTurn()" :board="board" :players-turn="Symbol.Cross" />
-      <WinnerOverlayVue v-if="gameWon" :grid-size="3" :player1-win="currentTurn == 1" />
+      <WinnerOverlayVue v-if="gameWon" :grid-size="3" :player1-win="currentTurn == 1" @resetGame="resetGame"/>
     </div>
     <InfoBar :current-turn="currentTurn" @resetGame="resetGame" />
   </div>
@@ -12,7 +12,7 @@
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/Symbol';
 import InfoBar from '@/components/InfoBar.vue';
-import WinnerOverlayVue from '../WinnerOverlay.vue';
+import WinnerOverlayVue from '../Overlay.vue';
 import WildTicTacToeGridVue from './WildTicTacToeGrid.vue';
 
 export default {

@@ -3,7 +3,7 @@
     <div class="board-container">
       <TicTacToeGridVue @turn="gameTurn()" :board="board" :players-turn="currentTurn" />
 
-      <WinnerOverlayVue v-if="gameWon" 
+      <WinnerOverlayVue v-if="gameWon" @resetGame="resetGame"
         :player1-win="board.winner() === Symbol.Cross" 
         :grid-size="3"
         player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
@@ -27,7 +27,7 @@ import InfoBar from '@/components/InfoBar.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 import TicTacToeGridVue from '../TicTacToeGrid.vue';
-import WinnerOverlayVue from '../WinnerOverlay.vue';
+import WinnerOverlayVue from '../Overlay.vue';
 
 export default {
   components: { InfoBar, CircleSymbol, CrossSymbol, TicTacToeGridVue, WinnerOverlayVue },

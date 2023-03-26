@@ -30,6 +30,7 @@ export class TicTacToeGrid extends Array<Symbol>{
             if (this[i] !== Symbol.None &&
                 this[i] == this[i + 3] &&
                 this[i] == this[i + 6]) {
+                    
                 return this[i];
             }
         }

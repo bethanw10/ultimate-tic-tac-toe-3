@@ -8,7 +8,7 @@
         </template>
       </div>
 
-      <WinnerOverlayVue v-if="gameWon" :player1-win="board.winner() === Symbol.Cross" :grid-size="board.length"
+      <WinnerOverlayVue v-if="gameWon" :player1-win="board.winner() === Symbol.Cross" :grid-size="3" @resetGame="resetGame"
         player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
     </div>
 
@@ -31,7 +31,7 @@ import ChildBoardVue from '@/components/Squared/TicTacToe2ChildGame.vue';
 import CircleSymbol from '@/components/Symbols/CircleSymbol.vue';
 import CrossSymbol from '@/components/Symbols/CrossSymbol.vue';
 import InfoBar from '@/components/InfoBar.vue';
-import WinnerOverlayVue from '../WinnerOverlay.vue';
+import WinnerOverlayVue from '../Overlay.vue';
 
 export default {
   components: { ChildBoardVue, CircleSymbol, CrossSymbol, InfoBar, WinnerOverlayVue },

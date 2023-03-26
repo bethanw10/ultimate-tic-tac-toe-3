@@ -1,8 +1,8 @@
 <template>
   <div class="board-container">
     <TicTacToeGridVue :board="board" :players-turn="playersTurn" :disabled="disabled" @turn="pickSquare($event)" />
-    <WinnerOverlayVue v-if="gameWon || disabled" 
-      :player1-win="board.winner() === Symbol.Cross" 
+    <ChildOverlayVue v-if="gameWon || disabled" 
+      :crossWin="board.winner() === Symbol.Cross" 
       :grid-size="3"
       :disabled="!gameWon && disabled" 
       player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
@@ -14,11 +14,11 @@ import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/Symbol';
 import type { PropType } from 'vue';
 import TicTacToeGridVue from '../TicTacToeGrid.vue';
-import WinnerOverlayVue from '../WinnerOverlay.vue';
+import ChildOverlayVue from './ChildOverlay.vue';
 
 export default {
   name: 'TicTacToeBoard',
-  components: { TicTacToeGridVue, WinnerOverlayVue },
+  components: { TicTacToeGridVue, ChildOverlayVue },
   props: {
     board: {
       type: TicTacToeGrid,

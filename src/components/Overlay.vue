@@ -8,15 +8,28 @@
             </template>
         </template>
     </div>
-    <div class="winner" v-if="!disabled">
-        <component :is="player1Symbol" v-if="player1Win" class="winning-symbol" />
-        <component :is="player2Symbol" v-if="!player1Win" class="winning-symbol" />
+    <div class="winner-info">
+
+        <div class="winner" v-if="!disabled">
+            <component :is="player1Symbol" v-if="player1Win" class="winning-symbol" />
+            <component :is="player2Symbol" v-if="!player1Win" class="winning-symbol" />
+            <div>wins!</div>
+        </div>
+
+        <div class="replay">
+            <ReplaySymbol class="replay-symbol" @click="$emit('reset-game')" color="var(--white)"/>
+            <!-- Replay? -->
+        </div>
     </div>
+
 </template>
     
 <script lang="ts">
+import ReplaySymbol from './Symbols/ReplaySymbol.vue';
+
 export default {
-    name: 'WinnerOverlay',
+    name: "WinnerOverlay",
+    components: { ReplaySymbol },
     props: {
         gridSize: {
             type: Number,
@@ -44,7 +57,7 @@ export default {
                 gridTemplateColumns: `repeat(${this.gridSize}, 1fr)`
             };
         }
-    }
+    },
 }
 </script>
     
@@ -87,18 +100,56 @@ export default {
     background-color: rgba(85, 85, 85, 0.8);
 }
 
-.winner {
+.winner-info {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    height: 100%;
+    width: 100%;
     z-index: 30;
+
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+        "."
+        "main"
+        "replay";
+
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: Nice Sugar;
+    background-color: #333333ab;
+}
+
+.winner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10vmin;
+    padding: 5vmin;
+    gap: 2vmin;
+    grid-area: main;
 }
 
 .winning-symbol {
     display: block;
-    padding: 15%;
+    height: 15vmin;
+    width: 15vmin;
+}
+
+.replay {
+    grid-area: replay;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 3vmin;
+    cursor: pointer;
+    gap: 1vmin;
+}
+
+.replay-symbol {
+    height: 10vmin;
+    width: 10vmin;
 }
 </style>
     
