@@ -112,7 +112,8 @@ export default {
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
-  display: none;
+  display: flex;
+
 }
 
 .square:active .choice {
@@ -128,9 +129,9 @@ export default {
   margin: 10%;
 }
 
-@media (hover: none) {
+@media only screen and (min-width : 768px) {
   .square .choice {
-    display: flex;
+    display: none;
   }
 }
 
