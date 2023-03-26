@@ -8,7 +8,7 @@
         </template>
       </div>
 
-      <WinnerOverlayVue v-if="gameWon" :player1-win="board.winner() === Symbol.Cross" :grid-size="3" @resetGame="resetGame"
+      <WinnerOverlayVue v-if="gameWon" :result="board.winner()" :grid-size="3" @resetGame="resetGame"
         player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
     </div>
 

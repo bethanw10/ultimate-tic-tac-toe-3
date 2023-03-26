@@ -8,7 +8,7 @@
       player1-symbol="CrossSymbol" player2-symbol="CircleSymbol" />
   </div>
 </template>
-  
+
 <script lang="ts">
 import { TicTacToeGrid } from '@/models/TicTacToeGrid';
 import { Symbol } from '@/models/Symbol';
